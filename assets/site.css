@@ -1,0 +1,221 @@
+/* 북극 해빙 예보 — iGDSL(igdsl.github.io)의 디자인 토큰을 그대로 따른다.
+   색·서체·간격은 연구실 사이트 assets/style.css 에서 가져왔다. */
+
+:root{
+  --navy:        #004d82;
+  --navy-deep:   #003354;
+  --navy-soft:   #3a7ba8;
+  --navy-pale:   #e8f1f8;
+  --navy-pale-2: #f4f8fc;
+
+  --ink:      #13202b;
+  --ink-soft: #3e5566;
+  --ink-mute: #6b8296;
+
+  --bg:       #ffffff;
+  --bg-tint:  #f6f9fc;
+  --line:     #dfe8f0;
+  --line-str: #c3d5e4;
+
+  --radius: 10px;
+  --maxw:  1320px;
+  --fs-body: 19px;
+}
+
+*{ box-sizing: border-box; }
+body{
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+               'Malgun Gothic', 'Noto Sans KR', sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+}
+a{ color: var(--navy); }
+.wrap{ max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+/* ---------------- 헤더 ---------------- */
+header.site{
+  position: sticky; top: 0; z-index: 60;
+  background: rgba(255,255,255,0.93);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.headbar{
+  max-width: var(--maxw); margin: 0 auto; padding: 14px 28px;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.headbar .brand img{ height: 40px; width: auto; display: block; }
+.headbar .title{
+  font-weight: 800; letter-spacing: -0.015em; color: var(--navy-deep);
+  font-size: 21px; padding-left: 20px; border-left: 1px solid var(--line-str);
+}
+.headbar nav{ margin-left: auto; display: flex; gap: 22px; font-size: 17px; font-weight: 600; }
+.headbar nav a{ color: var(--ink-soft); text-decoration: none; }
+.headbar nav a:hover{ color: var(--navy); }
+
+/* ---------------- 히어로 ---------------- */
+.hero{
+  background: linear-gradient(180deg, var(--navy-pale) 0%, var(--navy-pale-2) 60%, #fff 100%);
+  border-bottom: 1px solid var(--line);
+  padding: 50px 0 36px;
+}
+.hero h1{
+  margin: 0 0 10px; font-size: 44px; line-height: 1.25;
+  letter-spacing: -0.02em; font-weight: 800; color: var(--navy-deep);
+}
+.hero .sub{ margin: 0; max-width: 62ch; color: var(--ink-soft); }
+/* ---------------- 조작부 ---------------- */
+.controls{ margin-top: 26px; display: flex; align-items: center; gap: 14px 22px; flex-wrap: wrap; }
+.ctl{ display: flex; align-items: center; gap: 10px; }
+.ctl label{ font-weight: 700; color: var(--navy-deep); font-size: 17px; }
+.ctl select{
+  font: inherit; font-size: 17px; font-weight: 700; color: var(--navy);
+  border: 1px solid var(--line-str); border-radius: 100px;
+  padding: 8px 16px; background: #fff; cursor: pointer;
+}
+.seg{ display: inline-flex; background: #fff; border: 1px solid var(--line-str); border-radius: 100px; padding: 3px; }
+.segbtn{
+  font: inherit; font-size: 17px; font-weight: 700; cursor: pointer;
+  border: 0; background: none; color: var(--ink-soft); border-radius: 100px; padding: 7px 20px;
+}
+.segbtn.on{ background: var(--navy); color: #fff; }
+.pill{
+  font: inherit; font-size: 17px; font-weight: 600; cursor: pointer;
+  border: 1px solid var(--line-str); background: #fff; color: var(--ink-soft);
+  border-radius: 100px; padding: 8px 18px;
+}
+.pill.on{ background: var(--navy); border-color: var(--navy); color: #fff; }
+.submeta{ margin-top: 14px; font-size: 16.5px; color: var(--ink-mute); }
+
+/* ---------------- 지도 ---------------- */
+.block{ padding: 40px 0 64px; }
+.maps{ display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.panel{ margin: 0; }
+.panel figcaption{ display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+.panel .ptitle{ font-size: 21px; font-weight: 800; color: var(--navy-deep); letter-spacing: -0.015em; }
+.panel .psub{ font-size: 16.5px; color: var(--ink-mute); }
+
+.mapview{
+  position: relative; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--navy-pale-2);
+  aspect-ratio: 304 / 448;                 /* 격자 그대로 (nx x ny) */
+  touch-action: none; user-select: none; cursor: grab;
+}
+.mapview.drag{ cursor: grabbing; }
+.mapinner{ position: absolute; inset: 0; transform-origin: 0 0; will-change: transform; }
+.mapinner > .l{ position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.mapinner.crisp img.l{ image-rendering: pixelated; }   /* 크게 당기면 25 km 격자를 숨기지 않는다 */
+img.edge{ opacity: 0; transition: opacity .12s; }
+img.edge.on{ opacity: 1; }
+.mapview.empty{ background: var(--bg-tint) !important; }
+.mapview.empty img.l{ display: none; }
+.emptymsg{
+  display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  background: rgba(255,255,255,.88); border: 1px solid var(--line-str); border-radius: 100px;
+  padding: 8px 18px; font-size: 16.5px; color: var(--ink-mute); white-space: nowrap;
+}
+.mapview.empty .emptymsg{ display: block; }
+.zoomctl{ position: absolute; right: 10px; top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.zb{
+  width: 36px; height: 36px; line-height: 1; font-size: 19px; font-weight: 700;
+  border-radius: 8px; border: 1px solid var(--line-str); background: rgba(255,255,255,.93);
+  color: var(--navy-deep); cursor: pointer;
+}
+.zb:hover{ background: #fff; border-color: var(--navy-soft); }
+
+.extent{ display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-top: 12px;
+  border-top: 1px solid var(--line); padding-top: 11px; }
+.extent .k{ color: var(--ink-mute); font-size: 17px; }
+.extent .big{ font-size: 30px; font-weight: 800; color: var(--navy); letter-spacing: -0.02em; }
+.extent .unit{ font-size: 15.5px; color: var(--ink-mute); }
+
+.readout{
+  margin-top: 20px; padding: 10px 16px; min-height: 2.2em;
+  background: var(--navy-pale-2); border: 1px solid var(--line); border-radius: 8px;
+  font-size: 17px; color: var(--ink-soft); font-variant-numeric: tabular-nums;
+}
+.skill{ margin-top: 18px; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.skill .badge{
+  background: var(--navy-pale); color: var(--navy-deep); font-weight: 800;
+  border-radius: 100px; padding: 7px 18px; font-size: 18px; white-space: nowrap;
+}
+.skill .sk{ color: var(--ink-soft); font-size: 16.5px; max-width: 80ch; }
+.note{ font-size: 16px; color: var(--ink-mute); margin: 18px 0 0; }
+
+/* ---------------- 범례 ---------------- */
+.legendrow{ display: flex; gap: 40px; flex-wrap: wrap; margin-top: 26px; }
+.legend{ min-width: 260px; }
+.legend .cap{ font-size: 16px; font-weight: 600; color: var(--ink-soft); margin-bottom: 7px; }
+.legend .bar{ height: 12px; border-radius: 6px; border: 1px solid var(--line-str); }
+.legend .ends{ display: flex; justify-content: space-between; font-size: 15.5px; color: var(--ink-mute); margin-top: 5px; }
+.swrow{ display: flex; flex-wrap: wrap; gap: 10px 18px; }
+.sw{ display: inline-flex; align-items: center; gap: 7px; font-size: 16px; color: var(--ink-soft); }
+.chip{ width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(0,0,0,.12); display: inline-block; }
+
+/* ---------------- 푸터 ---------------- */
+footer.site{ background: var(--navy-deep); color: #cfe0ec; padding: 44px 0 30px; font-size: 16.5px; }
+footer.site a{ color: #cfe0ec; }
+footer.site .foot-grid{ display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+footer.site .fmeta{ max-width: 48ch; color: #a9c4d8; }
+footer.site img.flogo{ height: 44px; width: auto; filter: brightness(0) invert(1); opacity: .92; margin-bottom: 12px; }
+footer.site .flinks{ display: flex; flex-direction: column; gap: 8px; }
+footer.site .copyright{ margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.14); color: #8fb0c8; font-size: 15.5px; }
+
+@media (max-width: 900px){
+  :root{ --fs-body: 18px; }
+  .wrap{ padding: 0 16px; }
+  .headbar{ padding: 12px 16px; gap: 12px; }
+  .headbar .title{ padding-left: 12px; font-size: 19px; }
+  .headbar nav{ margin-left: auto; gap: 16px; }
+  .hero{ padding: 36px 0 28px; }
+  .hero h1{ font-size: 32px; }
+  .maps{ grid-template-columns: 1fr; gap: 26px; }
+}
+
+/* ---------------- 해빙면적 그래프 ---------------- */
+.chartbox{
+  margin-top: 40px; border: 1px solid var(--line); border-radius: var(--radius);
+  background: #fff; padding: 24px 26px 20px;
+}
+.charthead h2{ margin: 0 0 4px; font-size: 24px; letter-spacing: -0.02em; font-weight: 800; color: var(--navy-deep); }
+.charthead p{ margin: 0 0 14px; font-size: 16.5px; color: var(--ink-mute); max-width: 82ch; }
+.sie{ width: 100%; }
+.sie svg{ display: block; overflow: visible; }
+.sie text.ax{ font-size: 13px; fill: var(--ink-mute); font-family: inherit; font-variant-numeric: tabular-nums; }
+.sie circle{ cursor: crosshair; }
+.chartlegend{ display: flex; gap: 20px; flex-wrap: wrap; align-items: center; margin-top: 10px; font-size: 16px; color: var(--ink-soft); }
+.chartlegend .ck{ display: inline-flex; align-items: center; gap: 8px; }
+.chartlegend .ck .line{ width: 26px; height: 3px; border-radius: 2px; display: inline-block; }
+.chartlegend .ck.note{ color: var(--ink-mute); font-size: 15.5px; }
+
+/* 초기화 좌우 이동 */
+.ctl .nav{
+  font: inherit; font-size: 15px; line-height: 1; cursor: pointer;
+  width: 34px; height: 34px; border-radius: 100px;
+  border: 1px solid var(--line-str); background: #fff; color: var(--navy-deep);
+}
+.ctl .nav:hover:not(:disabled){ border-color: var(--navy-soft); }
+.ctl .nav:disabled{ opacity: .35; cursor: default; }
+.skill .badge.muted{ background: var(--bg-tint); color: var(--ink-mute); font-weight: 700; }
+
+/* 그래프 툴팁 */
+.sie{ position: relative; }
+.sie .tip{
+  position: absolute; display: none; pointer-events: none; z-index: 5;
+  background: #fff; border: 1px solid var(--line-str); border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(19,32,43,.10);
+  padding: 8px 12px; font-size: 15.5px; color: var(--ink); white-space: nowrap;
+  font-variant-numeric: tabular-nums; line-height: 1.5;
+}
+.sie .tip.on{ display: block; }
+.sie .tip b{ display: block; color: var(--navy-deep); font-size: 15px; margin-bottom: 2px; }
+.sie .tip span{ display: block; }
+.sie .tip .d{ width: 9px; height: 9px; border-radius: 100px; display: inline-block; margin-right: 7px; }
+.sie .tip .d.o{ background: #004d82; }
+.sie .tip .d.f{ background: #ff6a13; }
+.sie .tip .df{ color: var(--ink-mute); }
+.ctl select:disabled{ opacity: .45; cursor: default; }

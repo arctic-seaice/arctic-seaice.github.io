@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!-- 손으로 고치는 파일이다. 매달 바뀌는 것은 data/products.js 와 img/ · val/ 뿐이고,
+     이 파일은 export_products_site.py 가 처음 한 번만(또는 --force-template) 복사한다. -->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>북극 해빙 예보 | iGDSL 국립부경대학교</title>
+<meta name="description" content="다음 달과 다음 3개월의 북극 해빙을 매달 예측해 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL).">
+<link rel="canonical" href="https://arctic-seaice.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="북극 해빙 예보 · iGDSL">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://arctic-seaice.github.io/">
+<meta property="og:title" content="북극 해빙 예보">
+<meta property="og:description" content="다음 달과 다음 3개월의 북극 해빙을 매달 예측해 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL).">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="headbar">
+    <a class="brand" href="https://igdsl.github.io/" title="iGDSL 연구실 홈페이지">
+      <img src="https://igdsl.github.io/images/logo-full.png" alt="iGDSL 지능형 공간데이터과학 연구실" width="1550" height="620">
+    </a>
+    <div class="title">북극 해빙 예보</div>
+    <nav><a href="https://igdsl.github.io/">연구실</a></nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>다음 달, 그리고 다음 3개월</h1>
+    <p class="sub">북극 해빙 농도(SIC)를 25 km 격자에서 매달 예측합니다.
+       그 달 15일까지 관측된 자료만으로, 다음 한 달의 평균과 다음 세 달의 평균을 산출합니다.</p>
+    <div class="controls">
+      <div class="ctl"><label for="prodseg">상품</label><div class="seg" id="prodseg"></div></div>
+      <div class="ctl"><label for="initsel">초기화</label>
+        <button class="nav" id="initprev" type="button" title="이전 초기화" aria-label="이전 초기화">◀</button>
+        <select id="initsel" aria-label="초기화 월"></select>
+        <button class="nav" id="initnext" type="button" title="다음 초기화" aria-label="다음 초기화">▶</button>
+      </div>
+      <div class="ctl"><label for="viewseg">보기</label><div class="seg" id="viewseg"></div></div>
+      <div class="ctl"><label for="cmapsel">색상</label><select id="cmapsel" aria-label="해빙농도 색상표"></select></div>
+      <div class="ctl"><button class="pill" id="edgebtn" type="button">얼음 경계</button></div>
+    </div>
+    <div class="submeta" id="initmeta"></div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="maps" id="maps"></div>
+    <div class="readout" id="readout"></div>
+    <div class="skill" id="skill"></div>
+    <p class="note" id="modenote"></p>
+    <div class="legendrow" id="legendrow"></div>
+    <p class="note">두 지도는 함께 움직입니다 — 끌어서 이동, 휠·손가락으로 확대/축소, 마우스를 올리면 그 격자의 농도가 표시됩니다.</p>
+
+    <div class="chartbox">
+      <div class="charthead">
+        <h2>해빙면적 — 관측과 예보</h2>
+        <p id="chartsub"></p>
+      </div>
+      <div class="sie" id="sie"></div>
+      <div class="chartlegend" id="chartlegend"></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img class="flogo" src="https://igdsl.github.io/images/logo-full.png" alt="iGDSL 지능형 공간데이터과학 연구실">
+        <div class="fmeta">
+          국립부경대학교 지능형 공간데이터과학 연구실(iGDSL)<br>
+          위성·무인기 데이터와 인공지능을 결합해 지구환경을 분석하고 예측합니다.<br>
+          연구 산출물이며, 안전이 걸린 판단의 근거로 쓰도록 만든 공식 예보가 아닙니다.<br>
+          <span id="genstamp"></span>
+        </div>
+      </div>
+      <nav class="flinks" aria-label="바로가기">
+        <a href="https://igdsl.github.io/">연구실 홈페이지</a>
+        <a href="mailto:jchi@pknu.ac.kr">jchi@pknu.ac.kr</a>
+        <a href="https://nsidc.org/data/g02202">관측 자료: NOAA/NSIDC CDR G02202</a>
+        <a href="https://cds.climate.copernicus.eu/">기상 자료: ECMWF ERA5</a>
+      </nav>
+    </div>
+    <div class="copyright">
+      © <span id="yr">2026</span> Intelligent Geospatial Data Science Lab, Pukyong National University ·
+      부산광역시 남구 용소로 45, 정보융합관(D16) 419호
+    </div>
+  </div>
+</footer>
+
+<script src="data/products.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
