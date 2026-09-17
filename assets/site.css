@@ -39,11 +39,11 @@ a{ color: var(--navy); }
 
 /* ---------------- 헤더 ----------------
    연구실 사이트(igdsl.github.io) assets/style.css 의 헤더와 같은 규격이다.
-   한쪽을 고치면 다른 쪽도 같이 고친다. */
+   한쪽을 고치면 다른 쪽도 같이 고친다.
+   다만 이 페이지에서는 헤더를 고정하지 않는다 — 스크롤하면 아래 도구막대가
+   화면 맨 위에 붙어야 지도를 보면서 발표 시점·보기를 바꿀 수 있다. */
 header.site{
-  position: sticky; top: 0; z-index: 60;
-  background: rgba(255,255,255,0.93);
-  backdrop-filter: blur(12px);
+  background: #fff;
   border-bottom: 1px solid var(--line);
   min-height: 100px;
 }
@@ -77,47 +77,34 @@ header.site{
   white-space: nowrap;
 }
 
-nav.mainnav{ display: flex; gap: 4px; flex-wrap: nowrap; margin-left: auto; }
+/* 연구실 홈페이지로 돌아가는 버튼 (연구실 사이트 메뉴와 같은 알약 모양) */
+nav.mainnav{ display: flex; margin-left: auto; }
 nav.mainnav a{
   text-decoration: none; color: var(--ink-soft);
   font-size: 18px; font-weight: 600;
-  padding: 9px 15px; border-radius: 100px; white-space: nowrap;
-  transition: background .15s, color .15s;
+  padding: 9px 18px; border-radius: 100px; white-space: nowrap;
+  border: 1px solid var(--line-str); background: #fff;
+  transition: background .15s, color .15s, border-color .15s;
 }
-nav.mainnav a:hover{ background: var(--navy-pale); color: var(--navy); }
-nav.mainnav a.active{ background: var(--navy); color: #fff; }
-
-.navtoggle{
-  display: none;
-  border: 1px solid var(--line-str); background: #fff; border-radius: 8px;
-  padding: 9px 13px; font: inherit; font-size: 17px; cursor: pointer;
-  color: var(--navy-deep);
-}
+nav.mainnav a:hover{ background: var(--navy); border-color: var(--navy); color: #fff; }
 
 @media (max-width: 1120px){
-  .headbar{ flex-wrap: wrap; padding: 12px 20px; gap: 14px; }
+  .headbar{ padding: 12px 20px; gap: 14px; }
   .brand{ flex: 1 1 0; min-width: 0; }
   .brand .bt{ min-width: 0; }
   .brand .bt b, .brand .bt span{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .sitetitle{ order: 1; }
-  .navtoggle{ display: block; flex: 0 0 auto; order: 2; margin-left: auto; }
-  nav.mainnav{
-    display: none; order: 3; flex: 0 0 100%; width: 100%;
-    flex-direction: column; gap: 2px; margin-left: 0;
-    padding-top: 10px; border-top: 1px solid var(--line); margin-top: 10px;
-  }
-  nav.mainnav.open{ display: flex; }
-  nav.mainnav a{ padding: 12px 14px; border-radius: 8px; }
   .wrap{ padding: 0 20px; }
 }
 
-@media (max-width: 620px){
+@media (max-width: 760px){
   /* 좁은 화면에서는 로고 + 서비스 이름만 남긴다 */
-  .brand img{ height: 46px; }
+  header.site{ min-height: 0; }
+  .brand img{ height: 42px; }
   .brand .bt{ display: none; }
   .brand{ flex: 0 0 auto; }
   .sitetitle{ padding-left: 0; border-left: 0; font-size: 20px; }
-  .navtoggle{ padding: 9px 13px; font-size: 16px; }
+  nav.mainnav a{ font-size: 16px; padding: 8px 14px; }
+  nav.mainnav a .arrow, nav.mainnav a span{ display: none; }
 }
 
 /* ---------------- 히어로 ---------------- */
@@ -131,8 +118,17 @@ nav.mainnav a.active{ background: var(--navy); color: #fff; }
   letter-spacing: -0.02em; font-weight: 800; color: var(--navy-deep);
 }
 .hero .sub{ margin: 0; max-width: 62ch; color: var(--ink-soft); }
-/* ---------------- 조작부 ---------------- */
-.controls{ margin-top: 26px; display: flex; align-items: center; gap: 14px 22px; flex-wrap: wrap; }
+/* ---------------- 조작부 ----------------
+   지도를 보다가도 바꿀 수 있도록 화면 맨 위에 붙어 따라다닌다. */
+.toolbar{
+  position: sticky; top: 0; z-index: 55;
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 0 rgba(19,32,43,.03);
+}
+.toolbar .wrap{ padding-block: 11px; }
+.controls{ display: flex; align-items: center; gap: 10px 20px; flex-wrap: wrap; }
 .ctl{ display: flex; align-items: center; gap: 10px; }
 .ctl label{ font-weight: 700; color: var(--navy-deep); font-size: 17px; }
 .ctl select{
@@ -152,11 +148,18 @@ nav.mainnav a.active{ background: var(--navy); color: #fff; }
   border-radius: 100px; padding: 8px 18px;
 }
 .pill.on{ background: var(--navy); border-color: var(--navy); color: #fff; }
-.submeta{ margin-top: 14px; font-size: 16.5px; color: var(--ink-mute); }
+.submeta{ margin-top: 7px; font-size: 15.5px; color: var(--ink-mute); }
 
 /* ---------------- 지도 ---------------- */
-.block{ padding: 40px 0 64px; }
-.maps{ display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.block{ padding: 26px 0 64px; }
+/* 두 지도가 세로로 길어 화면을 넘지 않도록, 남은 화면 높이에 맞춰 폭을 정한다.
+   (폭 = 높이 × 304/448 — 격자 비율) */
+.maps{
+  display: grid;
+  grid-template-columns: repeat(2, min(calc(50% - 11px), max(300px, calc((100vh - 330px) * 304 / 448))));
+  justify-content: center;
+  gap: 22px;
+}
 .panel{ margin: 0; }
 .panel figcaption{ display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
 .panel .ptitle{ font-size: 21px; font-weight: 800; color: var(--navy-deep); letter-spacing: -0.015em; }
@@ -179,7 +182,8 @@ img.edge.on{ opacity: 1; }
 .emptymsg{
   display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
   background: rgba(255,255,255,.88); border: 1px solid var(--line-str); border-radius: 100px;
-  padding: 8px 18px; font-size: 16.5px; color: var(--ink-mute); white-space: nowrap;
+  padding: 8px 18px; font-size: 16.5px; color: var(--ink-mute);
+  max-width: 88%; text-align: center; line-height: 1.5;
 }
 .mapview.empty .emptymsg{ display: block; }
 .zoomctl{ position: absolute; right: 10px; top: 10px; display: flex; flex-direction: column; gap: 6px; }
@@ -232,11 +236,10 @@ footer.site .copyright{ margin-top: 24px; padding-top: 18px; border-top: 1px sol
   :root{ --fs-body: 18px; }
   .wrap{ padding: 0 16px; }
   .headbar{ padding: 12px 16px; gap: 12px; }
-  .headbar .title{ padding-left: 12px; font-size: 19px; }
-  .headbar nav{ margin-left: auto; gap: 16px; }
   .hero{ padding: 36px 0 28px; }
   .hero h1{ font-size: 32px; }
-  .maps{ grid-template-columns: 1fr; gap: 26px; }
+  .maps{ grid-template-columns: 1fr; gap: 26px; }   /* 한 줄 배치에서는 폭을 다 쓴다 */
+  .toolbar{ position: static; }                     /* 좁은 화면에서는 고정하지 않는다 (조작부가 화면을 많이 차지한다) */
 }
 
 /* ---------------- 해빙면적 그래프 ---------------- */

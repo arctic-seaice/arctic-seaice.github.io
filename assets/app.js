@@ -205,7 +205,7 @@
     const cmap = st.cmap;
     $('#maps').innerHTML = '';
     maps.length = 0;
-    if (!P) { $('#maps').appendChild(h('p', {}, '이 초기화에는 해당 상품이 없습니다.')); return; }
+    if (!P) { $('#maps').appendChild(h('p', {}, '이 발표 시점에는 해당 예보가 없습니다.')); return; }
 
     const obsP = panel('obs', '관측', P.img.obs ? span(P.targets) : `${span(P.targets)} · 미관측`);
     const fcstP = panel('fcst', '예보', span(P.targets));
@@ -251,7 +251,7 @@
       h('span', { class: 'sk' },
         has ? `${span(P.targets)} 관측과 견준 값입니다. 기후값(후행 10년 평균)보다 그만큼 오차가 작았습니다.`
             : `${span(P.targets)}이 관측되면 여기에 기후값 대비 성적이 표시됩니다.`,
-        s && s.n ? ` 상품 전체로는 검증된 ${s.n}회 평균 ${(s.skill_vs_clim * 100).toFixed(1)}% 우세입니다.` : ''));
+        s && s.n ? ` 이 예보 기간 전체로는 검증된 ${s.n}회 평균 ${(s.skill_vs_clim * 100).toFixed(1)}% 우세입니다.` : ''));
 
     chartAll();
   }
