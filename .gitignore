@@ -1,0 +1,8 @@
+# 맥/윈도우/구글 드라이브가 폴더에 남기는 부스러기
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+*.log

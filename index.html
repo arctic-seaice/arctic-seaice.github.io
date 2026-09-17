@@ -23,16 +23,10 @@
 <header class="site">
   <div class="headbar">
     <a class="brand" href="https://igdsl.github.io/" title="iGDSL 연구실 홈페이지">
-      <img src="https://igdsl.github.io/images/logo-mark.png" alt="iGDSL 로고" width="1550" height="490">
-      <span class="bt">
-        <b>지능형 공간데이터과학 연구실</b>
-        <span>Intelligent Geospatial Data Science Lab · PKNU</span>
-      </span>
+      <img src="https://igdsl.github.io/images/logo-full.png" alt="iGDSL 지능형 공간데이터과학 연구실" width="1550" height="620">
     </a>
-    <span class="sitetitle">북극 해빙 예보</span>
-    <nav class="mainnav">
-      <a class="home" href="https://igdsl.github.io/">연구실 홈페이지 <span aria-hidden="true">→</span></a>
-    </nav>
+    <div class="title">북극 해빙 예보</div>
+    <nav><a href="https://igdsl.github.io/">연구실</a></nav>
   </div>
 </header>
 
@@ -41,17 +35,12 @@
     <h1>다음 달, 그리고 다음 3개월</h1>
     <p class="sub">북극 해빙 농도(SIC)를 25 km 격자에서 매달 예측합니다.
        그 달 15일까지 관측된 자료만으로, 다음 한 달의 평균과 다음 세 달의 평균을 산출합니다.</p>
-  </div>
-</section>
-
-<div class="toolbar">
-  <div class="wrap">
     <div class="controls">
-      <div class="ctl"><label for="prodseg">예보 기간</label><div class="seg" id="prodseg"></div></div>
-      <div class="ctl"><label for="initsel">발표 시점</label>
-        <button class="nav" id="initprev" type="button" title="이전 발표" aria-label="이전 발표 시점">◀</button>
-        <select id="initsel" aria-label="발표 시점"></select>
-        <button class="nav" id="initnext" type="button" title="다음 발표" aria-label="다음 발표 시점">▶</button>
+      <div class="ctl"><label for="prodseg">상품</label><div class="seg" id="prodseg"></div></div>
+      <div class="ctl"><label for="initsel">초기화</label>
+        <button class="nav" id="initprev" type="button" title="이전 초기화" aria-label="이전 초기화">◀</button>
+        <select id="initsel" aria-label="초기화 월"></select>
+        <button class="nav" id="initnext" type="button" title="다음 초기화" aria-label="다음 초기화">▶</button>
       </div>
       <div class="ctl"><label for="viewseg">보기</label><div class="seg" id="viewseg"></div></div>
       <div class="ctl"><label for="cmapsel">색상</label><select id="cmapsel" aria-label="해빙농도 색상표"></select></div>
@@ -59,7 +48,7 @@
     </div>
     <div class="submeta" id="initmeta"></div>
   </div>
-</div>
+</section>
 
 <section class="block">
   <div class="wrap">
