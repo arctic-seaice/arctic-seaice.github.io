@@ -37,25 +37,88 @@ body{
 a{ color: var(--navy); }
 .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
 
-/* ---------------- 헤더 ---------------- */
+/* ---------------- 헤더 ----------------
+   연구실 사이트(igdsl.github.io) assets/style.css 의 헤더와 같은 규격이다.
+   한쪽을 고치면 다른 쪽도 같이 고친다. */
 header.site{
   position: sticky; top: 0; z-index: 60;
   background: rgba(255,255,255,0.93);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
+  min-height: 100px;
 }
 .headbar{
-  max-width: var(--maxw); margin: 0 auto; padding: 14px 28px;
-  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  max-width: var(--maxw); margin: 0 auto; padding: 16px 28px;
+  display: flex; align-items: center; gap: 22px;
 }
-.headbar .brand img{ height: 40px; width: auto; display: block; }
-.headbar .title{
+.brand{
+  display: flex; align-items: center; gap: 13px;
+  text-decoration: none; color: inherit; flex: 0 0 auto;
+}
+.brand img{ height: clamp(46px, 3.9vw, 58px) !important; width: auto; display: block; }
+.brand .bt{ line-height: 1.25; }
+.brand .bt b{
+  display: block;
+  font-size: clamp(19px, 1.95vw, 28px);
   font-weight: 800; letter-spacing: -0.015em; color: var(--navy-deep);
-  font-size: 21px; padding-left: 20px; border-left: 1px solid var(--line-str);
 }
-.headbar nav{ margin-left: auto; display: flex; gap: 22px; font-size: 17px; font-weight: 600; }
-.headbar nav a{ color: var(--ink-soft); text-decoration: none; }
-.headbar nav a:hover{ color: var(--navy); }
+.brand .bt span{
+  display: block;
+  font-size: clamp(12.5px, 1.25vw, 18px);
+  color: var(--ink-mute); letter-spacing: 0.01em;
+}
+
+/* 서비스 이름 — 연구실 브랜드와 세로선으로 구분 */
+.sitetitle{
+  flex: 0 0 auto;
+  font-size: clamp(18px, 1.55vw, 23px);
+  font-weight: 800; letter-spacing: -0.015em; color: var(--navy);
+  padding-left: 22px; border-left: 1px solid var(--line-str);
+  white-space: nowrap;
+}
+
+nav.mainnav{ display: flex; gap: 4px; flex-wrap: nowrap; margin-left: auto; }
+nav.mainnav a{
+  text-decoration: none; color: var(--ink-soft);
+  font-size: 18px; font-weight: 600;
+  padding: 9px 15px; border-radius: 100px; white-space: nowrap;
+  transition: background .15s, color .15s;
+}
+nav.mainnav a:hover{ background: var(--navy-pale); color: var(--navy); }
+nav.mainnav a.active{ background: var(--navy); color: #fff; }
+
+.navtoggle{
+  display: none;
+  border: 1px solid var(--line-str); background: #fff; border-radius: 8px;
+  padding: 9px 13px; font: inherit; font-size: 17px; cursor: pointer;
+  color: var(--navy-deep);
+}
+
+@media (max-width: 1120px){
+  .headbar{ flex-wrap: wrap; padding: 12px 20px; gap: 14px; }
+  .brand{ flex: 1 1 0; min-width: 0; }
+  .brand .bt{ min-width: 0; }
+  .brand .bt b, .brand .bt span{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sitetitle{ order: 1; }
+  .navtoggle{ display: block; flex: 0 0 auto; order: 2; margin-left: auto; }
+  nav.mainnav{
+    display: none; order: 3; flex: 0 0 100%; width: 100%;
+    flex-direction: column; gap: 2px; margin-left: 0;
+    padding-top: 10px; border-top: 1px solid var(--line); margin-top: 10px;
+  }
+  nav.mainnav.open{ display: flex; }
+  nav.mainnav a{ padding: 12px 14px; border-radius: 8px; }
+  .wrap{ padding: 0 20px; }
+}
+
+@media (max-width: 620px){
+  /* 좁은 화면에서는 로고 + 서비스 이름만 남긴다 */
+  .brand img{ height: 46px; }
+  .brand .bt{ display: none; }
+  .brand{ flex: 0 0 auto; }
+  .sitetitle{ padding-left: 0; border-left: 0; font-size: 20px; }
+  .navtoggle{ padding: 9px 13px; font-size: 16px; }
+}
 
 /* ---------------- 히어로 ---------------- */
 .hero{

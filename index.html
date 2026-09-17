@@ -23,10 +23,20 @@
 <header class="site">
   <div class="headbar">
     <a class="brand" href="https://igdsl.github.io/" title="iGDSL 연구실 홈페이지">
-      <img src="https://igdsl.github.io/images/logo-full.png" alt="iGDSL 지능형 공간데이터과학 연구실" width="1550" height="620">
+      <img src="https://igdsl.github.io/images/logo-mark.png" alt="iGDSL 로고" width="1550" height="490">
+      <span class="bt">
+        <b>지능형 공간데이터과학 연구실</b>
+        <span>Intelligent Geospatial Data Science Lab · PKNU</span>
+      </span>
     </a>
-    <div class="title">북극 해빙 예보</div>
-    <nav><a href="https://igdsl.github.io/">연구실</a></nav>
+    <span class="sitetitle">북극 해빙 예보</span>
+    <button class="navtoggle" aria-expanded="false" aria-controls="mainnav">☰ 메뉴</button>
+    <nav class="mainnav" id="mainnav">
+      <a href="index.html" class="active" aria-current="page">해빙 예보</a>
+      <a href="https://igdsl.github.io/">연구실 홈</a>
+      <a href="https://igdsl.github.io/research.html">연구</a>
+      <a href="https://igdsl.github.io/people.html">구성원</a>
+    </nav>
   </div>
 </header>
 
@@ -96,6 +106,18 @@
   </div>
 </footer>
 
+<script>
+/* 좁은 화면 메뉴 토글 — 연구실 사이트(assets/site.js)와 동일하게 동작한다. */
+(function () {
+  var btn = document.querySelector('header.site .navtoggle');
+  var nav = document.querySelector('header.site .mainnav');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+  });
+})();
+</script>
 <script src="data/products.js"></script>
 <script src="assets/app.js"></script>
 </body>
