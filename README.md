@@ -30,3 +30,10 @@
   예보 방법이나 입력 자료가 바뀌면 `Dataset` 의 `description`·`measurementTechnique`·`isBasedOn` 도 같이 고친다.
 - 검색엔진 소유확인 코드(구글·네이버·빙)는 `<head>` 의 주석 자리에 붙인다.
 - `sitemap.xml` 의 `lastmod` 는 새 예보를 올릴 때 그 날짜로 바꿔주면 좋다.
+
+## 주소(URL) 규칙
+
+화면을 바꿔도 주소는 `https://arctic-seaice.github.io/` 로 유지된다. 예전에 공유된
+`#2026-05/P1M/YlGnBu_r/sic` 형태의 주소로 들어오면 그 화면을 열어준 뒤 주소만 깨끗하게
+되돌린다(`assets/app.js` 의 `readHash`). 특정 화면을 링크로 공유해야 할 일이 생기면
+그때 '이 화면 링크 복사' 버튼을 따로 두는 편이 낫다.

@@ -292,8 +292,9 @@
     const i = D.inits.findIndex((e) => e.init === st.init);
     $('#initprev').disabled = i <= 0;
     $('#initnext').disabled = i < 0 || i >= D.inits.length - 1;
-    // 특정 화면을 바로 여는 주소: #2026-08/P1M/Blues_r/anom
-    history.replaceState(null, '', `#${st.init}/${st.prod}/${st.cmap}/${st.mode}`);
+    /* 주소(URL)에는 화면 상태를 쓰지 않는다 — 주소는 https://arctic-seaice.github.io/ 로 유지한다.
+       다만 #2026-08/P1M/Blues_r/anom 같은 주소로 들어오면 아래 readHash 가 그대로 읽어
+       해당 화면을 열어주므로, 예전에 공유한 링크는 계속 동작한다. */
   }
 
   function readHash() {
@@ -302,6 +303,8 @@
     if (D.products[p[1]]) st.prod = p[1];
     if (D.cmaps.some((c) => c.key === p[2])) st.cmap = p[2];
     if (MODES[p[3]]) st.mode = p[3];
+    /* 화면을 연 뒤 주소는 다시 깨끗하게 — 주소창에는 늘 사이트 주소만 남는다 */
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
   }
   window.addEventListener('hashchange', () => { readHash(); syncControls(); legend(); render(); });
 
@@ -335,8 +338,8 @@
     if (!S || !S.obs.length) return;
     const k = D.products[st.prod].months;
     $('#chartsub').textContent = k === 1
-      ? '월평균 해빙농도에서 농도 15% 이상 격자를 세어 계산한 면적입니다. 선은 관측, 점은 각 초기화의 예보입니다.'
-      : '3개월 평균 해빙농도에서 계산한 면적입니다. 가로축은 3개월 구간의 첫 달이고, 선은 관측, 점은 각 초기화의 예보입니다.';
+      ? '월평균 해빙농도에서 농도 15% 이상 격자를 세어 계산한 면적입니다. 선은 관측, 점은 각 발표 시점의 예보입니다.'
+      : '3개월 평균 해빙농도에서 계산한 면적입니다. 가로축은 3개월 구간의 첫 달이고, 선은 관측, 점은 각 발표 시점의 예보입니다.';
 
     const W = Math.max(320, host.clientWidth), H = 320, m = { l: 58, r: 14, t: 14, b: 40 };
     const months = [...new Set([...S.obs.map((d) => d[0]), ...S.fcst.map((d) => d[0])])].sort();
@@ -416,7 +419,7 @@
     const key = (color, label, dash) => h('span', { class: 'ck' },
       h('span', { class: 'line', style: `background:${dash ? 'none' : color};` +
         (dash ? `border-top:2px dashed ${color};` : '') }), label);
-    $('#chartlegend').append(key('#004d82', '관측'), key('#ff6a13', '예보 (각 초기화)', true),
+    $('#chartlegend').append(key('#004d82', '관측'), key('#ff6a13', '예보 (각 발표 시점)', true),
       h('span', { class: 'ck note' }, '점 위에 마우스를 올리면 값이 표시됩니다'));
   }
 

@@ -71,8 +71,8 @@ header.site{
 /* 서비스 이름 — 연구실 브랜드와 세로선으로 구분 */
 .sitetitle{
   flex: 0 0 auto;
-  font-size: clamp(18px, 1.55vw, 23px);
-  font-weight: 800; letter-spacing: -0.015em; color: var(--navy);
+  font-size: clamp(19px, 1.95vw, 28px);        /* 연구실명(.brand .bt b)과 같은 크기 */
+  font-weight: 800; letter-spacing: -0.015em; color: var(--navy-deep);
   padding-left: 22px; border-left: 1px solid var(--line-str);
   white-space: nowrap;
 }
