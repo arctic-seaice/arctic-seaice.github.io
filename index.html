@@ -6,16 +6,93 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>북극 해빙 예보 | iGDSL 국립부경대학교</title>
-<meta name="description" content="다음 달과 다음 3개월의 북극 해빙을 매달 예측해 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL).">
+<meta name="description" content="북극 해빙 농도(SIC)를 25 km 격자에서 매달 예측합니다. 다음 한 달과 다음 세 달의 평균 해빙 농도·해빙 면적을 관측과 나란히 공개하는 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL)의 연구 산출물입니다.">
 <link rel="canonical" href="https://arctic-seaice.github.io/">
+<meta name="author" content="국립부경대학교 지능형 공간데이터과학 연구실 (iGDSL)">
+<meta name="keywords" content="북극 해빙, 해빙 예측, 해빙 농도, 해빙 면적, sea ice concentration, Arctic sea ice forecast, SIC, 위성 원격탐사, GeoAI, 파운데이션 모델, 국립부경대학교, iGDSL">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
+<meta name="theme-color" content="#004d82">
+
+<!-- 검색엔진 소유확인 코드는 아래에 붙인다 (구글 / 네이버 / 빙 순서)
+<meta name="google-site-verification" content="...">
+<meta name="naver-site-verification" content="...">
+<meta name="msvalidate.01" content="...">
+-->
+
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="북극 해빙 예보 · iGDSL">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:url" content="https://arctic-seaice.github.io/">
-<meta property="og:title" content="북극 해빙 예보">
-<meta property="og:description" content="다음 달과 다음 3개월의 북극 해빙을 매달 예측해 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL).">
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<meta property="og:title" content="북극 해빙 예보 — 다음 달, 그리고 다음 3개월">
+<meta property="og:description" content="다음 달과 다음 3개월의 북극 해빙 농도를 25 km 격자에서 매달 예측해 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL).">
+<meta property="og:image" content="https://arctic-seaice.github.io/assets/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="북극 해빙 예보 — 국립부경대학교 iGDSL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="북극 해빙 예보 — 다음 달, 그리고 다음 3개월">
+<meta name="twitter:description" content="다음 달과 다음 3개월의 북극 해빙 농도를 25 km 격자에서 매달 예측해 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL).">
+<meta name="twitter:image" content="https://arctic-seaice.github.io/assets/og-card.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://arctic-seaice.github.io/#website",
+      "url": "https://arctic-seaice.github.io/",
+      "name": "북극 해빙 예보 · iGDSL",
+      "inLanguage": "ko",
+      "publisher": { "@id": "https://igdsl.github.io/#lab" }
+    },
+    {
+      "@type": "ResearchOrganization",
+      "@id": "https://igdsl.github.io/#lab",
+      "name": "지능형 공간데이터과학 연구실",
+      "alternateName": ["iGDSL", "Intelligent Geospatial Data Science Laboratory"],
+      "url": "https://igdsl.github.io/",
+      "logo": "https://igdsl.github.io/images/logo-full.png",
+      "email": "jchi@pknu.ac.kr",
+      "parentOrganization": {
+        "@type": "CollegeOrUniversity",
+        "name": "국립부경대학교",
+        "alternateName": "Pukyong National University",
+        "url": "https://www.pknu.ac.kr/"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://arctic-seaice.github.io/#dataset",
+      "name": "북극 해빙 농도 월별 예보 (다음 달·다음 3개월)",
+      "alternateName": "Arctic sea ice concentration monthly forecast",
+      "description": "북극 해빙 농도(SIC)를 NSIDC 극사영 북반구 25 km 격자에서 매달 예측한 결과입니다. 그 달 15일까지 관측된 자료만으로 다음 한 달 평균(P-1M)과 다음 세 달 평균(P-3M)을 산출하며, 관측·예보 지도와 해빙면적 시계열, 기후값 대비 검증 성적을 함께 공개합니다. 연구 산출물이며 공식 예보가 아닙니다.",
+      "url": "https://arctic-seaice.github.io/",
+      "inLanguage": "ko",
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "isAccessibleForFree": true,
+      "keywords": ["북극 해빙", "해빙 농도", "sea ice concentration", "Arctic sea ice forecast", "seasonal prediction", "GeoAI", "remote sensing"],
+      "creator": { "@id": "https://igdsl.github.io/#lab" },
+      "publisher": { "@id": "https://igdsl.github.io/#lab" },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "북극해 (NSIDC 극사영 북반구 25 km 격자)",
+        "geo": { "@type": "GeoShape", "box": "31.35 -180 90 180" }
+      },
+      "variableMeasured": [
+        { "@type": "PropertyValue", "name": "해빙 농도 (sea ice concentration)", "unitText": "%" },
+        { "@type": "PropertyValue", "name": "해빙 면적 (sea ice extent)", "unitText": "10^6 km^2" }
+      ],
+      "measurementTechnique": "CMIP6 사전학습 파운데이션 모델 앙상블 + 종단간 영상예측 모델 + 후행 10년 기후값 결합",
+      "isBasedOn": [
+        { "@type": "Dataset", "name": "NOAA/NSIDC Sea Ice Concentration CDR (G02202 v6)", "url": "https://nsidc.org/data/g02202" },
+        { "@type": "Dataset", "name": "ECMWF ERA5 (Copernicus Climate Change Service)", "url": "https://cds.climate.copernicus.eu/" }
+      ]
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>

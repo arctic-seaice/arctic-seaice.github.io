@@ -1,0 +1,5 @@
+# 북극 해빙 예보 — 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL)
+User-agent: *
+Allow: /
+
+Sitemap: https://arctic-seaice.github.io/sitemap.xml

@@ -13,7 +13,8 @@
 
 | 경로 | 무엇 |
 |---|---|
-| `index.html`, `assets/` | 페이지 — **손으로 고치는 절반** |
+| `index.html`, `assets/` | 페이지 — **손으로 고치는 절반** (파비콘·공유카드 `assets/og-card.jpg` 포함) |
+| `robots.txt`, `sitemap.xml` | 검색엔진용 — 주소가 바뀌면 같이 고친다 |
 | `img/`, `val/`, `data/products.js` | 매달 자동 생성 — 직접 고치지 말 것 |
 
 생성기는 예보 시스템 저장소의 `scripts/utils/export_products_site.py`이고, 매달 예보가 산출된 뒤
@@ -22,3 +23,10 @@
 생성기 쪽 템플릿(`webapp/site_template/`)에도 같이 반영해야 다음 달에 되돌아가지 않는다.
 
 자료 출처: NOAA/NSIDC Sea Ice Concentration CDR (G02202 v6), ECMWF ERA5 (Copernicus Climate Change Service).
+
+## 검색 노출
+
+- `index.html` 의 `<head>` 에 canonical·OG·트위터 카드와 schema.org `Dataset` 구조화 데이터가 들어 있다.
+  예보 방법이나 입력 자료가 바뀌면 `Dataset` 의 `description`·`measurementTechnique`·`isBasedOn` 도 같이 고친다.
+- 검색엔진 소유확인 코드(구글·네이버·빙)는 `<head>` 의 주석 자리에 붙인다.
+- `sitemap.xml` 의 `lastmod` 는 새 예보를 올릴 때 그 날짜로 바꿔주면 좋다.
