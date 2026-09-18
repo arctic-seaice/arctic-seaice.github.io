@@ -43,7 +43,10 @@ a{ color: var(--navy); }
    다만 이 페이지에서는 헤더를 고정하지 않는다 — 스크롤하면 아래 도구막대가
    화면 맨 위에 붙어야 지도를 보면서 발표 시점·보기를 바꿀 수 있다. */
 header.site{
-  background: #fff;
+  /* 배경·흐림 효과까지 연구실 사이트와 똑같이 둔다 — backdrop-filter 가 있고 없고에 따라
+     글자 앤티앨리어싱이 달라져(합성 레이어 여부) 같은 글꼴·크기인데도 굵기가 달라 보인다. */
+  background: rgba(255,255,255,0.93);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
   min-height: 100px;
 }
@@ -71,7 +74,7 @@ header.site{
 /* 서비스 이름 — 연구실 브랜드와 세로선으로 구분 */
 .sitetitle{
   flex: 0 0 auto;
-  font-size: clamp(19px, 1.95vw, 28px);        /* 연구실명(.brand .bt b)과 같은 크기 */
+  font-size: clamp(21px, 2.25vw, 32px);        /* 이 사이트의 이름이므로 연구실명보다 크게 */
   font-weight: 800; letter-spacing: -0.015em; color: var(--navy-deep);
   padding-left: 22px; border-left: 1px solid var(--line-str);
   white-space: nowrap;
@@ -102,9 +105,17 @@ nav.mainnav a:hover{ background: var(--navy); border-color: var(--navy); color: 
   .brand img{ height: 42px; }
   .brand .bt{ display: none; }
   .brand{ flex: 0 0 auto; }
-  .sitetitle{ padding-left: 0; border-left: 0; font-size: 20px; }
+  .sitetitle{ padding-left: 0; border-left: 0; font-size: 21px; }
   nav.mainnav a{ font-size: 16px; padding: 8px 14px; }
   nav.mainnav a .arrow, nav.mainnav a span{ display: none; }
+}
+
+@media (max-width: 560px){
+  /* 더 좁아지면 줄바꿈을 허용해 가로 스크롤이 생기지 않게 한다 */
+  .headbar{ flex-wrap: wrap; gap: 10px 12px; }
+  .sitetitle{ font-size: 19px; white-space: normal; line-height: 1.25; }
+  nav.mainnav{ margin-left: auto; }
+  nav.mainnav a{ font-size: 15.5px; padding: 8px 13px; }
 }
 
 /* ---------------- 히어로 ---------------- */
@@ -129,12 +140,13 @@ nav.mainnav a:hover{ background: var(--navy); border-color: var(--navy); color: 
 }
 .toolbar .wrap{ padding-block: 11px; }
 .controls{ display: flex; align-items: center; gap: 10px 20px; flex-wrap: wrap; }
-.ctl{ display: flex; align-items: center; gap: 10px; }
+.ctl{ display: flex; align-items: center; gap: 10px; min-width: 0; }   /* 좁은 화면에서 줄어들 수 있게 */
 .ctl label{ font-weight: 700; color: var(--navy-deep); font-size: 17px; }
 .ctl select{
   font: inherit; font-size: 17px; font-weight: 700; color: var(--navy);
   border: 1px solid var(--line-str); border-radius: 100px;
   padding: 8px 16px; background: #fff; cursor: pointer;
+  max-width: 100%;                      /* 색상표 이름이 길어도 화면을 넘지 않는다 */
 }
 .seg{ display: inline-flex; background: #fff; border: 1px solid var(--line-str); border-radius: 100px; padding: 3px; }
 .segbtn{
@@ -239,6 +251,7 @@ footer.site .copyright{ margin-top: 24px; padding-top: 18px; border-top: 1px sol
   .hero{ padding: 36px 0 28px; }
   .hero h1{ font-size: 32px; }
   .maps{ grid-template-columns: 1fr; gap: 26px; }   /* 한 줄 배치에서는 폭을 다 쓴다 */
+  .ctl select{ max-width: calc(100vw - 100px); }    /* 색상표 이름이 길어도 가로 스크롤이 생기지 않게 */
   .toolbar{ position: static; }                     /* 좁은 화면에서는 고정하지 않는다 (조작부가 화면을 많이 차지한다) */
 }
 
