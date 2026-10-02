@@ -207,7 +207,8 @@
     maps.length = 0;
     if (!P) { $('#maps').appendChild(h('p', {}, '이 발표 시점에는 해당 예보가 없습니다.')); return; }
 
-    const obsP = panel('obs', '관측', P.img.obs ? span(P.targets) : `${span(P.targets)} · 미관측`);
+    const obsP = panel('obs', '관측', P.img.obs ? span(P.targets) + (P.obs_provisional ? ' · 잠정' : '')
+                                                : `${span(P.targets)} · 미관측`);
     const fcstP = panel('fcst', '예보', span(P.targets));
     $('#maps').append(obsP.el, fcstP.el);
 
@@ -245,11 +246,14 @@
     const s = D.verification[st.prod], own = P.skill;
     $('#skill').innerHTML = '';
     const has = own !== null && own !== undefined;
+    /* 잠정: 공식 월자료가 나오기 전, 일별 위성자료의 월평균과 견준 성적 (export_products_site.py) */
+    const prov = has && !!P.skill_provisional;
     $('#skill').append(
       h('span', { class: has ? 'badge' : 'badge muted' },
-        has ? `이 예보 · 기후값 대비 ${(own * 100).toFixed(1)}% 우세` : '이 예보 · 아직 검증 전'),
+        has ? `이 예보 · 기후값 대비 ${(own * 100).toFixed(1)}% 우세${prov ? ' (잠정)' : ''}` : '이 예보 · 아직 검증 전'),
       h('span', { class: 'sk' },
-        has ? `${span(P.targets)} 관측과 견준 값입니다. 기후값(후행 10년 평균)보다 그만큼 오차가 작았습니다.`
+        has ? `${span(P.targets)} ${prov ? '잠정 ' : ''}관측과 견준 값입니다. 기후값(후행 10년 평균)보다 그만큼 오차가 작았습니다.`
+              + (prov ? ' 잠정 관측은 일별 위성자료로 만든 월평균이라, 공식 월자료가 나오면 조금 달라질 수 있습니다.' : '')
             : `${span(P.targets)}이 관측되면 여기에 기후값 대비 성적이 표시됩니다.`,
         s && s.n ? ` 이 예보 기간 전체로는 검증된 ${s.n}회 평균 ${(s.skill_vs_clim * 100).toFixed(1)}% 우세입니다.` : ''));
 
@@ -378,7 +382,8 @@
     add('path', { d: 'M' + obsPts.map((p) => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join('L'),
                   fill: 'none', stroke: '#004d82', 'stroke-width': 2.2, 'stroke-linejoin': 'round' });
     S.obs.forEach((d) => add('circle', { cx: X(idx.get(d[0])).toFixed(1), cy: Y(d[1]).toFixed(1),
-                                         r: 3, fill: '#004d82' }));
+                                         r: 3, fill: d[2] ? '#fff' : '#004d82',          // 속이 빈 점 = 잠정
+                                         stroke: '#004d82', 'stroke-width': d[2] ? 1.6 : 0 }));
     if (S.fcst.length) {
       const fp = S.fcst.map((d) => [X(idx.get(d[0])), Y(d[1])]);
       add('path', { d: 'M' + fp.map((p) => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join('L'),
@@ -394,6 +399,7 @@
     const tip = h('div', { class: 'tip' });
     host.appendChild(tip);
     const O = new Map(S.obs), F = new Map(S.fcst);
+    const OP = new Set(S.obs.filter((d) => d[2]).map((d) => d[0]));
     const hit = add('rect', { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, fill: 'transparent' });
     const hide = () => { tip.classList.remove('on'); guide.setAttribute('opacity', 0); };
     hit.addEventListener('mouseleave', hide);
@@ -407,7 +413,7 @@
       guide.setAttribute('x1', X(i)); guide.setAttribute('x2', X(i)); guide.setAttribute('opacity', 1);
       const per = D.products[st.prod].months === 1 ? ym(mm) : `${ym(mm)}–${+month_add(mm, 2).slice(5, 7)}월`;
       tip.innerHTML = `<b>${per}</b>` +
-        (o === undefined ? '' : `<span><i class="d o"></i>관측 ${o.toFixed(2)}</span>`) +
+        (o === undefined ? '' : `<span><i class="d o"></i>관측${OP.has(mm) ? ' (잠정)' : ''} ${o.toFixed(2)}</span>`) +
         (f === undefined ? '' : `<span><i class="d f"></i>예보 ${f.toFixed(2)}</span>`) +
         (o === undefined || f === undefined ? ''
           : `<span class="df">차이 ${(f - o >= 0 ? '+' : '') + (f - o).toFixed(2)}</span>`);
@@ -419,13 +425,16 @@
     const key = (color, label, dash) => h('span', { class: 'ck' },
       h('span', { class: 'line', style: `background:${dash ? 'none' : color};` +
         (dash ? `border-top:2px dashed ${color};` : '') }), label);
-    $('#chartlegend').append(key('#004d82', '관측'), key('#ff6a13', '예보 (각 발표 시점)', true),
-      h('span', { class: 'ck note' }, '점 위에 마우스를 올리면 값이 표시됩니다'));
+    $('#chartlegend').append(...[key('#004d82', '관측'), key('#ff6a13', '예보 (각 발표 시점)', true),
+      OP.size ? h('span', { class: 'ck note' }, '속이 빈 점은 잠정 관측') : null,
+      h('span', { class: 'ck note' }, '점 위에 마우스를 올리면 값이 표시됩니다')].filter(Boolean));
   }
 
   window.addEventListener('resize', () => { maps.forEach((m) => m.apply()); chartAll(); });
   readHash(); syncControls(); legend(); render();
+  const pv = D.observations_provisional || [];
   $('#genstamp').textContent =
-    `예보 갱신 ${D.generated_utc.slice(0, 10)} · 관측 자료 ${ym(D.observations_through)}까지`;
+    `예보 갱신 ${D.generated_utc.slice(0, 10)} · 관측 자료 ${ym(D.observations_through)}까지`
+    + (pv.length ? ` (${pv.map(ym).join(', ')}은 일별 자료로 만든 잠정값)` : '');
   $('#yr').textContent = new Date().getFullYear();
 })();
