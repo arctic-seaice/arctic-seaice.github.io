@@ -1,39 +1,40 @@
 # 북극 해빙 예보 — arctic-seaice.github.io
 
-다음 달(P-1M)과 다음 3개월(P-3M)의 북극 해빙 농도를 매달 예측해 공개하는 정적 사이트다.
+다음 3개월의 북극 해빙 농도를 매달 예측해 **그림 + NetCDF 첨부파일**로 공개하는 정적 사이트다.
 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL, https://igdsl.github.io/).
+연구 산출물이며, 안전이 걸린 판단의 근거로 쓰도록 만든 공식 예보가 아니다.
 
-- 격자: NSIDC 극사영 북반구 25 km (EPSG:3411, 304×448)
-- 입력: NOAA/NSIDC CDR G02202 v6(해빙 농도) + ECMWF ERA5(대기). 직전 12개월이며 마지막 달은 1–15일 부분 관측
-- 방법: CMIP6 사전학습 파운데이션 모델 앙상블 + 종단간 영상예측 모델 + 후행 10년 기후값의 결합.
-  결합 가중치는 검증기간(2016–2020)에서만 정하고 시험기간에는 손대지 않았다
-- 연구 산출물이며, 안전이 걸린 판단의 근거로 쓰도록 만든 공식 예보가 아니다
+## 매달 올리는 법
+
+1. 예측 결과 `PKNU_AI_SIC_YYYYMM.nc`(와 갱신된 `reference_sie.csv`)를 옆 폴더 `../sea-ice-forecasting/` 에 넣는다.
+2. 이 폴더에서 변환기를 돌린다.
+   ```bash
+   python3 tools/build_site.py          # 원본 폴더가 다른 곳이면 --src 경로
+   ```
+3. `git add -A && git commit -m "2026년 11월 발표" && git push`
+
+변환기는 새로 들어오거나 바뀐 nc 만 그림을 다시 그리고(`--force` 로 전부), `index.html`·`sitemap.xml` 을 다시 쓴다.
+원본 폴더에서 nc 를 지우면 사이트에서도 그 발표가 빠진다.
+필요 패키지: `pip install numpy xarray netCDF4 matplotlib pillow`
 
 ## 이 저장소의 내용
 
 | 경로 | 무엇 |
 |---|---|
-| `index.html`, `assets/` | 페이지 — **손으로 고치는 절반** (파비콘·공유카드 `assets/og-card.jpg` 포함) |
-| `robots.txt`, `sitemap.xml` | 검색엔진용 — 주소가 바뀌면 같이 고친다 |
-| `img/`, `val/`, `data/products.js` | 매달 자동 생성 — 직접 고치지 말 것 |
+| `tools/build_site.py` | 변환기 (nc → 그림·첨부파일·페이지) |
+| `tools/template.html` | 페이지 틀 — **페이지를 고치려면 여기를 고친다** (`index.html` 은 매번 덮어씀) |
+| `tools/land_mask.png` | 25 km 격자(304×448, 북쪽 위) 육지 마스크 |
+| `assets/` | 스타일·파비콘·공유카드 — 손으로 고친다 |
+| `figs/SIC_YYYYMM.png` | 발표별 4패널 그림 — 자동 생성 |
+| `files/` | 내려받기용 nc·`reference_sie.csv` — 자동 복사 |
+| `index.html`, `sitemap.xml` | 자동 생성 |
 
-생성기는 예보 시스템 저장소의 `scripts/utils/export_products_site.py`이고, 매달 예보가 산출된 뒤
-그곳에서 실행해 이 저장소로 push한다. 생성기는 자기가 만들지 않은 `img/`·`val/` 파일을 지우므로,
-그 두 폴더에 손으로 파일을 두지 않는다. 페이지(`index.html`, `assets/`)를 고치면
-생성기 쪽 템플릿(`webapp/site_template/`)에도 같이 반영해야 다음 달에 되돌아가지 않는다.
-
-자료 출처: NOAA/NSIDC Sea Ice Concentration CDR (G02202 v6), ECMWF ERA5 (Copernicus Climate Change Service).
+그림: 다음 3개월 각각과 3개월 평균의 해빙 농도, 빨간 선은 예측 빙연(15%).
+패널 제목의 SIE 는 15% 이상 격자 면적(25 km × 25 km 격자 수)이고, 괄호는 `reference_sie.csv` 의 관측값(있으면) 또는 10년 평년값이다.
 
 ## 검색 노출
 
-- `index.html` 의 `<head>` 에 canonical·OG·트위터 카드와 schema.org `Dataset` 구조화 데이터가 들어 있다.
-  예보 방법이나 입력 자료가 바뀌면 `Dataset` 의 `description`·`measurementTechnique`·`isBasedOn` 도 같이 고친다.
-- 검색엔진 소유확인 코드(구글·네이버·빙)는 `<head>` 의 주석 자리에 붙인다.
-- `sitemap.xml` 의 `lastmod` 는 새 예보를 올릴 때 그 날짜로 바꿔주면 좋다.
+`tools/template.html` 의 `<head>` 에 canonical·OG·트위터 카드와 schema.org `Dataset` 구조화 데이터가 있다
+(`distribution` 에 nc 내려받기 주소가 발표마다 자동으로 들어간다). 검색엔진 소유확인 코드는 템플릿 `<head>` 의 주석 자리에 붙인다.
 
-## 주소(URL) 규칙
-
-화면을 바꿔도 주소는 `https://arctic-seaice.github.io/` 로 유지된다. 예전에 공유된
-`#2026-05/P1M/YlGnBu_r/sic` 형태의 주소로 들어오면 그 화면을 열어준 뒤 주소만 깨끗하게
-되돌린다(`assets/app.js` 의 `readHash`). 특정 화면을 링크로 공유해야 할 일이 생기면
-그때 '이 화면 링크 복사' 버튼을 따로 두는 편이 낫다.
+자료 출처: NOAA/NSIDC Sea Ice Concentration CDR (G02202 v6), ECMWF ERA5 (Copernicus Climate Change Service).

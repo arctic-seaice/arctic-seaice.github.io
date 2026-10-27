@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<!-- 손으로 고치는 파일이다. 매달 바뀌는 것은 data/products.js 와 img/ · val/ 뿐이고,
-     이 파일은 export_products_site.py 가 처음 한 번만(또는 --force-template) 복사한다. -->
+<!-- 자동 생성 — tools/build_site.py 가 tools/template.html 로 만든다. 이 파일을 직접 고치지 말고 템플릿을 고칠 것. -->
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>북극 해빙 예보 | iGDSL 국립부경대학교</title>
-<meta name="description" content="북극 해빙 농도(SIC)를 25 km 격자에서 매달 예측합니다. 다음 한 달과 다음 세 달의 평균 해빙 농도·해빙 면적을 관측과 나란히 공개하는 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL)의 연구 산출물입니다.">
+<meta name="description" content="북극 해빙 농도(SIC)를 25 km 격자에서 매달 예측해 그림과 NetCDF 파일로 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL)의 연구 산출물입니다.">
 <link rel="canonical" href="https://arctic-seaice.github.io/">
 <meta name="author" content="국립부경대학교 지능형 공간데이터과학 연구실 (iGDSL)">
-<meta name="keywords" content="북극 해빙, 해빙 예측, 해빙예측, 해빙 전망, 해빙 농도, 해빙 면적, 해빙 두께, 북극항로, 북극 항로, 북극해, 위성 해빙 정보, 북극 해빙 감시, 극지 원격탐사, 항로 주변 위험, Arctic sea ice, sea ice forecast, sea ice prediction, sea ice concentration, SIC, sea ice extent, Northern Sea Route, Arctic shipping route, ice navigation, polar remote sensing, GeoAI, 국립부경대학교, iGDSL">
+<meta name="keywords" content="북극 해빙, 해빙 예측, 해빙예측, 해빙 전망, 해빙 농도, 해빙 면적, 북극항로, 북극 항로, 북극해, 위성 해빙 정보, 북극 해빙 감시, 극지 원격탐사, Arctic sea ice, sea ice forecast, sea ice prediction, sea ice concentration, SIC, sea ice extent, Northern Sea Route, Arctic shipping route, polar remote sensing, GeoAI, 국립부경대학교, iGDSL">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/favicon-180.png">
 <meta name="theme-color" content="#004d82">
@@ -24,15 +23,15 @@
 <meta property="og:site_name" content="북극 해빙 예보 · iGDSL">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:url" content="https://arctic-seaice.github.io/">
-<meta property="og:title" content="북극 해빙 예보 — 다음 달, 그리고 다음 3개월">
-<meta property="og:description" content="다음 달과 다음 3개월의 북극 해빙 농도를 25 km 격자에서 매달 예측해 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL).">
+<meta property="og:title" content="북극 해빙 예보 — 다음 3개월">
+<meta property="og:description" content="북극 해빙 농도를 25 km 격자에서 매달 예측해 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL).">
 <meta property="og:image" content="https://arctic-seaice.github.io/assets/og-card.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="북극 해빙 예보 — 국립부경대학교 iGDSL">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="북극 해빙 예보 — 다음 달, 그리고 다음 3개월">
-<meta name="twitter:description" content="다음 달과 다음 3개월의 북극 해빙 농도를 25 km 격자에서 매달 예측해 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL).">
+<meta name="twitter:title" content="북극 해빙 예보 — 다음 3개월">
+<meta name="twitter:description" content="북극 해빙 농도를 25 km 격자에서 매달 예측해 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL).">
 <meta name="twitter:image" content="https://arctic-seaice.github.io/assets/og-card.jpg">
 
 <script type="application/ld+json">
@@ -65,16 +64,17 @@
     {
       "@type": "Dataset",
       "@id": "https://arctic-seaice.github.io/#dataset",
-      "name": "북극 해빙 농도 월별 예보 (다음 달·다음 3개월)",
+      "name": "북극 해빙 농도 월별 예보 (다음 3개월)",
       "alternateName": "Arctic sea ice concentration monthly forecast",
-      "description": "북극 해빙 농도(SIC)를 NSIDC 극사영 북반구 25 km 격자에서 매달 예측한 결과입니다. 그 달 15일까지 관측된 자료만으로 다음 한 달 평균(P-1M)과 다음 세 달 평균(P-3M)을 산출하며, 관측·예보 지도와 해빙면적 시계열, 기후값 대비 검증 성적을 함께 공개합니다. 연구 산출물이며 공식 예보가 아닙니다.",
+      "description": "북극 해빙 농도(SIC)를 NSIDC 극사영 북반구 25 km 격자에서 매달 예측한 결과입니다. 그 달 15일까지의 자료로 다음 세 달 각각의 월평균과 세 달 평균을 산출해 그림과 NetCDF 파일로 공개합니다. 연구 산출물이며 공식 예보가 아닙니다.",
       "url": "https://arctic-seaice.github.io/",
+      "dateModified": "2026-10-27",
       "inLanguage": "ko",
       "license": "https://creativecommons.org/licenses/by/4.0/",
       "isAccessibleForFree": true,
       "keywords": ["북극 해빙", "해빙 예측", "해빙 농도", "해빙 면적", "북극항로", "북극해", "위성 해빙 정보", "극지 원격탐사",
                    "Arctic sea ice", "sea ice forecast", "sea ice prediction", "sea ice concentration", "sea ice extent",
-                   "Northern Sea Route", "Arctic shipping route", "ice navigation", "polar remote sensing", "GeoAI", "seasonal prediction"],
+                   "Northern Sea Route", "Arctic shipping route", "polar remote sensing", "GeoAI", "seasonal prediction"],
       "creator": { "@id": "https://igdsl.github.io/#lab" },
       "publisher": { "@id": "https://igdsl.github.io/#lab" },
       "spatialCoverage": {
@@ -83,10 +83,21 @@
         "geo": { "@type": "GeoShape", "box": "31.35 -180 90 180" }
       },
       "variableMeasured": [
-        { "@type": "PropertyValue", "name": "해빙 농도 (sea ice concentration)", "unitText": "%" },
-        { "@type": "PropertyValue", "name": "해빙 면적 (sea ice extent)", "unitText": "10^6 km^2" }
+        { "@type": "PropertyValue", "name": "해빙 농도 (sea ice concentration)", "unitText": "1" }
       ],
-      "measurementTechnique": "CMIP6 사전학습 파운데이션 모델 앙상블 + 종단간 영상예측 모델 + 후행 10년 기후값 결합",
+      "measurementTechnique": "AI 앙상블 (AnchorNet · SimVP · 파운데이션 모델) 월별 해빙 농도 예측",
+      "distribution": [
+        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202610.nc", "name": "2026년 10월 발표" },
+        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202609.nc", "name": "2026년 9월 발표" },
+        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202608.nc", "name": "2026년 8월 발표" },
+        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202607.nc", "name": "2026년 7월 발표" },
+        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202606.nc", "name": "2026년 6월 발표" },
+        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202605.nc", "name": "2026년 5월 발표" },
+        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202604.nc", "name": "2026년 4월 발표" },
+        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202603.nc", "name": "2026년 3월 발표" },
+        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202602.nc", "name": "2026년 2월 발표" },
+        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202601.nc", "name": "2026년 1월 발표" }
+      ],
       "isBasedOn": [
         { "@type": "Dataset", "name": "NOAA/NSIDC Sea Ice Concentration CDR (G02202 v6)", "url": "https://nsidc.org/data/g02202" },
         { "@type": "Dataset", "name": "ECMWF ERA5 (Copernicus Climate Change Service)", "url": "https://cds.climate.copernicus.eu/" }
@@ -117,46 +128,60 @@
 
 <section class="hero">
   <div class="wrap">
-    <h1>다음 달, 그리고 다음 3개월</h1>
+    <h1>다음 3개월의 북극 해빙</h1>
     <p class="sub">북극 해빙 농도(SIC)를 25 km 격자에서 매달 예측합니다.
-       그 달 15일까지 관측된 자료만으로, 다음 한 달의 평균과 다음 세 달의 평균을 산출합니다.</p>
+       그 달 15일까지의 자료로 다음 세 달의 월평균과 세 달 평균을 산출해, 그림과 NetCDF 파일로 공개합니다.</p>
   </div>
 </section>
 
-<div class="toolbar">
-  <div class="wrap">
-    <div class="controls">
-      <div class="ctl"><label for="prodseg">예보 기간</label><div class="seg" id="prodseg"></div></div>
-      <div class="ctl"><label for="initsel">발표 시점</label>
-        <button class="nav" id="initprev" type="button" title="이전 발표" aria-label="이전 발표 시점">◀</button>
-        <select id="initsel" aria-label="발표 시점"></select>
-        <button class="nav" id="initnext" type="button" title="다음 발표" aria-label="다음 발표 시점">▶</button>
-      </div>
-      <div class="ctl"><label for="viewseg">보기</label><div class="seg" id="viewseg"></div></div>
-      <div class="ctl"><label for="cmapsel">색상</label><select id="cmapsel" aria-label="해빙농도 색상표"></select></div>
-      <div class="ctl"><button class="pill" id="edgebtn" type="button">얼음 경계</button></div>
-    </div>
-    <div class="submeta" id="initmeta"></div>
-  </div>
-</div>
-
 <section class="block">
   <div class="wrap">
-    <div class="maps" id="maps"></div>
-    <div class="readout" id="readout"></div>
-    <div class="skill" id="skill"></div>
-    <p class="note" id="modenote"></p>
-    <div class="legendrow" id="legendrow"></div>
-    <p class="note">두 지도는 함께 움직입니다 — 끌어서 이동, 휠·손가락으로 확대/축소, 마우스를 올리면 그 격자의 농도가 표시됩니다.</p>
-
-    <div class="chartbox">
-      <div class="charthead">
-        <h2>해빙면적 — 관측과 예보</h2>
-        <p id="chartsub"></p>
+    <div class="latesthead">
+      <div>
+        <span class="tag">최신 발표</span>
+        <h2>2026년 10월 발표</h2>
+        <p class="meta">2026년 10월 15일까지의 자료로 산출한 2026년 11월 ~ 2027년 1월 예측</p>
       </div>
-      <div class="sie" id="sie"></div>
-      <div class="chartlegend" id="chartlegend"></div>
+      <div class="btns">
+        <a class="btn" href="files/PKNU_AI_SIC_202610.nc" download>NetCDF 내려받기</a>
+        <a class="btn ghost" href="figs/SIC_202610.png?v=1792988043" download>그림 (PNG)</a>
+        <a class="btn ghost" href="files/reference_sie.csv" download>참고 해빙면적 (CSV)</a>
+      </div>
     </div>
+    <figure class="fig">
+      <a href="figs/SIC_202610.png?v=1792988043" target="_blank" title="크게 보기"><img src="figs/SIC_202610.png?v=1792988043" alt="2026년 10월 발표 북극 해빙 농도 예측 지도"></a>
+      <figcaption>빨간 선은 예측 빙연(해빙 농도 15%), SIE는 15% 이상 격자의 면적입니다. 괄호 안은 관측값(있을 때) 또는 최근 10년 평년값입니다.
+        파일 이름: <code>PKNU_AI_SIC_202610.nc</code></figcaption>
+    </figure>
+
+    <h2 class="sec">지난 발표</h2>
+    <div class="tablewrap">
+      <table class="arch">
+        <thead><tr><th>발표</th><th>예측 대상 월</th><th>예측 SIE (M km²)</th><th>첨부파일</th></tr></thead>
+        <tbody>
+        <tr><td class="o">2026년 10월 <em>최신</em></td><td>2026.11, 2026.12, 2027.01</td><td class="n">9.31 · 11.76 · 13.34</td><td class="dl"><a href="figs/SIC_202610.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202610.nc" download>NetCDF</a></td></tr>
+        <tr><td class="o">2026년 9월</td><td>2026.10, 2026.11, 2026.12</td><td class="n">7.08 · 9.07 · 11.77</td><td class="dl"><a href="figs/SIC_202609.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202609.nc" download>NetCDF</a></td></tr>
+        <tr><td class="o">2026년 8월</td><td>2026.09, 2026.10, 2026.11</td><td class="n">4.99 · 7.01 · 9.18</td><td class="dl"><a href="figs/SIC_202608.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202608.nc" download>NetCDF</a></td></tr>
+        <tr><td class="o">2026년 7월</td><td>2026.08, 2026.09, 2026.10</td><td class="n">5.86 · 5.04 · 7.40</td><td class="dl"><a href="figs/SIC_202607.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202607.nc" download>NetCDF</a></td></tr>
+        <tr><td class="o">2026년 6월</td><td>2026.07, 2026.08, 2026.09</td><td class="n">8.26 · 5.49 · 4.84</td><td class="dl"><a href="figs/SIC_202606.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202606.nc" download>NetCDF</a></td></tr>
+        <tr><td class="o">2026년 5월</td><td>2026.06, 2026.07, 2026.08</td><td class="n">10.74 · 7.76 · 5.22</td><td class="dl"><a href="figs/SIC_202605.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202605.nc" download>NetCDF</a></td></tr>
+        <tr><td class="o">2026년 4월</td><td>2026.05, 2026.06, 2026.07</td><td class="n">12.27 · 11.00 · 7.91</td><td class="dl"><a href="figs/SIC_202604.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202604.nc" download>NetCDF</a></td></tr>
+        <tr><td class="o">2026년 3월</td><td>2026.04, 2026.05, 2026.06</td><td class="n">13.91 · 12.50 · 11.01</td><td class="dl"><a href="figs/SIC_202603.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202603.nc" download>NetCDF</a></td></tr>
+        <tr><td class="o">2026년 2월</td><td>2026.03, 2026.04, 2026.05</td><td class="n">14.67 · 13.83 · 12.43</td><td class="dl"><a href="figs/SIC_202602.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202602.nc" download>NetCDF</a></td></tr>
+        <tr><td class="o">2026년 1월</td><td>2026.02, 2026.03, 2026.04</td><td class="n">14.64 · 14.85 · 13.94</td><td class="dl"><a href="figs/SIC_202601.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202601.nc" download>NetCDF</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="sec">파일 안내</h2>
+    <ul class="spec">
+      <li><b>격자</b> NSIDC 극사영 북반구 25 km (EPSG:3411, 304 × 448)</li>
+      <li><b>변수</b> <code>sic</code> 다음 3개월 각각의 월평균 해빙 농도(0–1), <code>sic_3month</code> 3개월 평균,
+          <code>*_raw</code> 분위 보정 전 값</li>
+      <li><b>입력</b> NOAA/NSIDC CDR G02202 v6 해빙 농도 + ECMWF ERA5. 그 달 1–15일 자료까지 사용</li>
+      <li><b>모델</b> v2026H1_r5</li>
+    </ul>
+    <p class="note">연구 산출물이며, 안전이 걸린 판단의 근거로 쓰도록 만든 공식 예보가 아닙니다. 마지막 갱신 2026-10-27.</p>
   </div>
 </section>
 
@@ -167,9 +192,7 @@
         <img class="flogo" src="https://igdsl.github.io/images/logo-full.png" alt="iGDSL 지능형 공간데이터과학 연구실">
         <div class="fmeta">
           국립부경대학교 지능형 공간데이터과학 연구실(iGDSL)<br>
-          위성·무인기 데이터와 인공지능을 결합해 지구환경을 분석하고 예측합니다.<br>
-          연구 산출물이며, 안전이 걸린 판단의 근거로 쓰도록 만든 공식 예보가 아닙니다.<br>
-          <span id="genstamp"></span>
+          위성·무인기 데이터와 인공지능을 결합해 지구환경을 분석하고 예측합니다.
         </div>
       </div>
       <nav class="flinks" aria-label="바로가기">
@@ -180,13 +203,10 @@
       </nav>
     </div>
     <div class="copyright">
-      © <span id="yr">2026</span> Intelligent Geospatial Data Science Lab, Pukyong National University ·
+      © 2026 Intelligent Geospatial Data Science Lab, Pukyong National University ·
       부산광역시 남구 용소로 45, 정보융합관(D16) 419호
     </div>
   </div>
 </footer>
-
-<script src="data/products.js"></script>
-<script src="assets/app.js"></script>
 </body>
 </html>

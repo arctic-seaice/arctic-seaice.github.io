@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!-- 자동 생성 — tools/build_site.py 가 tools/template.html 로 만든다. 이 파일을 직접 고치지 말고 템플릿을 고칠 것. -->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>북극 해빙 예보 | iGDSL 국립부경대학교</title>
+<meta name="description" content="북극 해빙 농도(SIC)를 25 km 격자에서 매달 예측해 그림과 NetCDF 파일로 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL)의 연구 산출물입니다.">
+<link rel="canonical" href="https://arctic-seaice.github.io/">
+<meta name="author" content="국립부경대학교 지능형 공간데이터과학 연구실 (iGDSL)">
+<meta name="keywords" content="북극 해빙, 해빙 예측, 해빙예측, 해빙 전망, 해빙 농도, 해빙 면적, 북극항로, 북극 항로, 북극해, 위성 해빙 정보, 북극 해빙 감시, 극지 원격탐사, Arctic sea ice, sea ice forecast, sea ice prediction, sea ice concentration, SIC, sea ice extent, Northern Sea Route, Arctic shipping route, polar remote sensing, GeoAI, 국립부경대학교, iGDSL">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
+<meta name="theme-color" content="#004d82">
+
+<!-- 검색엔진 소유확인 코드는 아래에 붙인다 (구글 / 네이버 / 빙 순서)
+<meta name="google-site-verification" content="...">
+<meta name="naver-site-verification" content="...">
+<meta name="msvalidate.01" content="...">
+-->
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="북극 해빙 예보 · iGDSL">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://arctic-seaice.github.io/">
+<meta property="og:title" content="북극 해빙 예보 — 다음 3개월">
+<meta property="og:description" content="북극 해빙 농도를 25 km 격자에서 매달 예측해 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL).">
+<meta property="og:image" content="https://arctic-seaice.github.io/assets/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="북극 해빙 예보 — 국립부경대학교 iGDSL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="북극 해빙 예보 — 다음 3개월">
+<meta name="twitter:description" content="북극 해빙 농도를 25 km 격자에서 매달 예측해 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL).">
+<meta name="twitter:image" content="https://arctic-seaice.github.io/assets/og-card.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://arctic-seaice.github.io/#website",
+      "url": "https://arctic-seaice.github.io/",
+      "name": "북극 해빙 예보 · iGDSL",
+      "inLanguage": "ko",
+      "publisher": { "@id": "https://igdsl.github.io/#lab" }
+    },
+    {
+      "@type": "ResearchOrganization",
+      "@id": "https://igdsl.github.io/#lab",
+      "name": "지능형 공간데이터과학 연구실",
+      "alternateName": ["iGDSL", "Intelligent Geospatial Data Science Laboratory"],
+      "url": "https://igdsl.github.io/",
+      "logo": "https://igdsl.github.io/images/logo-full.png",
+      "email": "jchi@pknu.ac.kr",
+      "parentOrganization": {
+        "@type": "CollegeOrUniversity",
+        "name": "국립부경대학교",
+        "alternateName": "Pukyong National University",
+        "url": "https://www.pknu.ac.kr/"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://arctic-seaice.github.io/#dataset",
+      "name": "북극 해빙 농도 월별 예보 (다음 3개월)",
+      "alternateName": "Arctic sea ice concentration monthly forecast",
+      "description": "북극 해빙 농도(SIC)를 NSIDC 극사영 북반구 25 km 격자에서 매달 예측한 결과입니다. 그 달 15일까지의 자료로 다음 세 달 각각의 월평균과 세 달 평균을 산출해 그림과 NetCDF 파일로 공개합니다. 연구 산출물이며 공식 예보가 아닙니다.",
+      "url": "https://arctic-seaice.github.io/",
+      "dateModified": "{{UPDATED}}",
+      "inLanguage": "ko",
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "isAccessibleForFree": true,
+      "keywords": ["북극 해빙", "해빙 예측", "해빙 농도", "해빙 면적", "북극항로", "북극해", "위성 해빙 정보", "극지 원격탐사",
+                   "Arctic sea ice", "sea ice forecast", "sea ice prediction", "sea ice concentration", "sea ice extent",
+                   "Northern Sea Route", "Arctic shipping route", "polar remote sensing", "GeoAI", "seasonal prediction"],
+      "creator": { "@id": "https://igdsl.github.io/#lab" },
+      "publisher": { "@id": "https://igdsl.github.io/#lab" },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "북극해 (NSIDC 극사영 북반구 25 km 격자)",
+        "geo": { "@type": "GeoShape", "box": "31.35 -180 90 180" }
+      },
+      "variableMeasured": [
+        { "@type": "PropertyValue", "name": "해빙 농도 (sea ice concentration)", "unitText": "1" }
+      ],
+      "measurementTechnique": "AI 앙상블 (AnchorNet · SimVP · 파운데이션 모델) 월별 해빙 농도 예측",
+      "distribution": [
+        {{DISTRIBUTION}}
+      ],
+      "isBasedOn": [
+        { "@type": "Dataset", "name": "NOAA/NSIDC Sea Ice Concentration CDR (G02202 v6)", "url": "https://nsidc.org/data/g02202" },
+        { "@type": "Dataset", "name": "ECMWF ERA5 (Copernicus Climate Change Service)", "url": "https://cds.climate.copernicus.eu/" }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="headbar">
+    <a class="brand" href="https://igdsl.github.io/" title="iGDSL 연구실 홈페이지">
+      <img src="https://igdsl.github.io/images/logo-mark.png" alt="iGDSL 로고" width="1550" height="490">
+      <span class="bt">
+        <b>지능형 공간데이터과학 연구실</b>
+        <span>Intelligent Geospatial Data Science Lab · PKNU</span>
+      </span>
+    </a>
+    <span class="sitetitle">북극 해빙 예보 시스템</span>
+    <nav class="mainnav">
+      <a class="home" href="https://igdsl.github.io/">연구실 홈페이지 <span aria-hidden="true">→</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>다음 3개월의 북극 해빙</h1>
+    <p class="sub">북극 해빙 농도(SIC)를 25 km 격자에서 매달 예측합니다.
+       그 달 15일까지의 자료로 다음 세 달의 월평균과 세 달 평균을 산출해, 그림과 NetCDF 파일로 공개합니다.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="latesthead">
+      <div>
+        <span class="tag">최신 발표</span>
+        <h2>{{LATEST_TITLE}}</h2>
+        <p class="meta">{{LATEST_SUB}}</p>
+      </div>
+      <div class="btns">
+        <a class="btn" href="{{LATEST_NC}}" download>NetCDF 내려받기</a>
+        <a class="btn ghost" href="{{LATEST_FIG}}" download>그림 (PNG)</a>
+        {{REF_LINK}}
+      </div>
+    </div>
+    <figure class="fig">
+      <a href="{{LATEST_FIG}}" target="_blank" title="크게 보기"><img src="{{LATEST_FIG}}" alt="{{LATEST_TITLE}} 북극 해빙 농도 예측 지도"></a>
+      <figcaption>빨간 선은 예측 빙연(해빙 농도 15%), SIE는 15% 이상 격자의 면적입니다. 괄호 안은 관측값(있을 때) 또는 최근 10년 평년값입니다.
+        파일 이름: <code>{{LATEST_NC_NAME}}</code></figcaption>
+    </figure>
+
+    <h2 class="sec">지난 발표</h2>
+    <div class="tablewrap">
+      <table class="arch">
+        <thead><tr><th>발표</th><th>예측 대상 월</th><th>예측 SIE (M km²)</th><th>첨부파일</th></tr></thead>
+        <tbody>
+        {{ROWS}}
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="sec">파일 안내</h2>
+    <ul class="spec">
+      <li><b>격자</b> NSIDC 극사영 북반구 25 km (EPSG:3411, 304 × 448)</li>
+      <li><b>변수</b> <code>sic</code> 다음 3개월 각각의 월평균 해빙 농도(0–1), <code>sic_3month</code> 3개월 평균,
+          <code>*_raw</code> 분위 보정 전 값</li>
+      <li><b>입력</b> NOAA/NSIDC CDR G02202 v6 해빙 농도 + ECMWF ERA5. 그 달 1–15일 자료까지 사용</li>
+      <li><b>모델</b> {{LATEST_MODEL}}</li>
+    </ul>
+    <p class="note">연구 산출물이며, 안전이 걸린 판단의 근거로 쓰도록 만든 공식 예보가 아닙니다. 마지막 갱신 {{UPDATED}}.</p>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img class="flogo" src="https://igdsl.github.io/images/logo-full.png" alt="iGDSL 지능형 공간데이터과학 연구실">
+        <div class="fmeta">
+          국립부경대학교 지능형 공간데이터과학 연구실(iGDSL)<br>
+          위성·무인기 데이터와 인공지능을 결합해 지구환경을 분석하고 예측합니다.
+        </div>
+      </div>
+      <nav class="flinks" aria-label="바로가기">
+        <a href="https://igdsl.github.io/">연구실 홈페이지</a>
+        <a href="mailto:jchi@pknu.ac.kr">jchi@pknu.ac.kr</a>
+        <a href="https://nsidc.org/data/g02202">관측 자료: NOAA/NSIDC CDR G02202</a>
+        <a href="https://cds.climate.copernicus.eu/">기상 자료: ECMWF ERA5</a>
+      </nav>
+    </div>
+    <div class="copyright">
+      © {{YEAR}} Intelligent Geospatial Data Science Lab, Pukyong National University ·
+      부산광역시 남구 용소로 45, 정보융합관(D16) 419호
+    </div>
+  </div>
+</footer>
+</body>
+</html>

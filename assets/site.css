@@ -40,8 +40,7 @@ a{ color: var(--navy); }
 /* ---------------- 헤더 ----------------
    연구실 사이트(igdsl.github.io) assets/style.css 의 헤더와 같은 규격이다.
    한쪽을 고치면 다른 쪽도 같이 고친다.
-   다만 이 페이지에서는 헤더를 고정하지 않는다 — 스크롤하면 아래 도구막대가
-   화면 맨 위에 붙어야 지도를 보면서 발표 시점·보기를 바꿀 수 있다. */
+*/
 header.site{
   /* 배경·흐림 효과까지 연구실 사이트와 똑같이 둔다 — backdrop-filter 가 있고 없고에 따라
      글자 앤티앨리어싱이 달라져(합성 레이어 여부) 같은 글꼴·크기인데도 굵기가 달라 보인다. */
@@ -129,111 +128,41 @@ nav.mainnav a:hover{ background: var(--navy); border-color: var(--navy); color: 
   letter-spacing: -0.02em; font-weight: 800; color: var(--navy-deep);
 }
 .hero .sub{ margin: 0; max-width: 62ch; color: var(--ink-soft); }
-/* ---------------- 조작부 ----------------
-   지도를 보다가도 바꿀 수 있도록 화면 맨 위에 붙어 따라다닌다. */
-.toolbar{
-  position: sticky; top: 0; z-index: 55;
-  background: rgba(255,255,255,0.94);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line);
-  box-shadow: 0 1px 0 rgba(19,32,43,.03);
-}
-.toolbar .wrap{ padding-block: 11px; }
-.controls{ display: flex; align-items: center; gap: 10px 20px; flex-wrap: wrap; }
-.ctl{ display: flex; align-items: center; gap: 10px; min-width: 0; }   /* 좁은 화면에서 줄어들 수 있게 */
-.ctl label{ font-weight: 700; color: var(--navy-deep); font-size: 17px; }
-.ctl select{
-  font: inherit; font-size: 17px; font-weight: 700; color: var(--navy);
-  border: 1px solid var(--line-str); border-radius: 100px;
-  padding: 8px 16px; background: #fff; cursor: pointer;
-  max-width: 100%;                      /* 색상표 이름이 길어도 화면을 넘지 않는다 */
-}
-.seg{ display: inline-flex; background: #fff; border: 1px solid var(--line-str); border-radius: 100px; padding: 3px; }
-.segbtn{
-  font: inherit; font-size: 17px; font-weight: 700; cursor: pointer;
-  border: 0; background: none; color: var(--ink-soft); border-radius: 100px; padding: 7px 20px;
-}
-.segbtn.on{ background: var(--navy); color: #fff; }
-.pill{
-  font: inherit; font-size: 17px; font-weight: 600; cursor: pointer;
-  border: 1px solid var(--line-str); background: #fff; color: var(--ink-soft);
-  border-radius: 100px; padding: 8px 18px;
-}
-.pill.on{ background: var(--navy); border-color: var(--navy); color: #fff; }
-.submeta{ margin-top: 7px; font-size: 15.5px; color: var(--ink-mute); }
+/* ---------------- 본문 ---------------- */
+.block{ padding: 34px 0 70px; }
+.latesthead{ display: flex; justify-content: space-between; align-items: flex-end; gap: 18px 30px; flex-wrap: wrap; }
+.tag{ display: inline-block; background: var(--navy); color: #fff; font-weight: 700; font-size: 16px;
+  border-radius: 100px; padding: 4px 14px; }
+.latesthead h2{ margin: 8px 0 2px; font-size: 34px; font-weight: 800; letter-spacing: -0.02em; color: var(--navy-deep); }
+.latesthead .meta{ margin: 0; color: var(--ink-soft); }
+.btns{ display: flex; gap: 10px; flex-wrap: wrap; }
+.btn{ display: inline-block; text-decoration: none; font-weight: 700; font-size: 18px;
+  background: var(--navy); color: #fff; border: 1px solid var(--navy); border-radius: 100px; padding: 10px 22px; }
+.btn:hover{ background: var(--navy-deep); }
+.btn.ghost{ background: #fff; color: var(--navy); border-color: var(--line-str); }
+.btn.ghost:hover{ border-color: var(--navy); }
+.fig{ margin: 24px 0 0; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 14px; }
+.fig img{ display: block; width: 100%; height: auto; }
+.fig figcaption{ margin-top: 10px; font-size: 16.5px; color: var(--ink-mute); }
+code{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .88em;
+  background: var(--navy-pale-2); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; }
 
-/* ---------------- 지도 ---------------- */
-.block{ padding: 26px 0 64px; }
-/* 두 지도가 세로로 길어 화면을 넘지 않도록, 남은 화면 높이에 맞춰 폭을 정한다.
-   (폭 = 높이 × 304/448 — 격자 비율) */
-.maps{
-  display: grid;
-  grid-template-columns: repeat(2, min(calc(50% - 11px), max(300px, calc((100vh - 330px) * 304 / 448))));
-  justify-content: center;
-  gap: 22px;
-}
-.panel{ margin: 0; }
-.panel figcaption{ display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
-.panel .ptitle{ font-size: 21px; font-weight: 800; color: var(--navy-deep); letter-spacing: -0.015em; }
-.panel .psub{ font-size: 16.5px; color: var(--ink-mute); }
-
-.mapview{
-  position: relative; overflow: hidden;
-  border: 1px solid var(--line); border-radius: 8px; background: var(--navy-pale-2);
-  aspect-ratio: 304 / 448;                 /* 격자 그대로 (nx x ny) */
-  touch-action: none; user-select: none; cursor: grab;
-}
-.mapview.drag{ cursor: grabbing; }
-.mapinner{ position: absolute; inset: 0; transform-origin: 0 0; will-change: transform; }
-.mapinner > .l{ position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.mapinner.crisp img.l{ image-rendering: pixelated; }   /* 크게 당기면 25 km 격자를 숨기지 않는다 */
-img.edge{ opacity: 0; transition: opacity .12s; }
-img.edge.on{ opacity: 1; }
-.mapview.empty{ background: var(--bg-tint) !important; }
-.mapview.empty img.l{ display: none; }
-.emptymsg{
-  display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  background: rgba(255,255,255,.88); border: 1px solid var(--line-str); border-radius: 100px;
-  padding: 8px 18px; font-size: 16.5px; color: var(--ink-mute);
-  max-width: 88%; text-align: center; line-height: 1.5;
-}
-.mapview.empty .emptymsg{ display: block; }
-.zoomctl{ position: absolute; right: 10px; top: 10px; display: flex; flex-direction: column; gap: 6px; }
-.zb{
-  width: 36px; height: 36px; line-height: 1; font-size: 19px; font-weight: 700;
-  border-radius: 8px; border: 1px solid var(--line-str); background: rgba(255,255,255,.93);
-  color: var(--navy-deep); cursor: pointer;
-}
-.zb:hover{ background: #fff; border-color: var(--navy-soft); }
-
-.extent{ display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-top: 12px;
-  border-top: 1px solid var(--line); padding-top: 11px; }
-.extent .k{ color: var(--ink-mute); font-size: 17px; }
-.extent .big{ font-size: 30px; font-weight: 800; color: var(--navy); letter-spacing: -0.02em; }
-.extent .unit{ font-size: 15.5px; color: var(--ink-mute); }
-
-.readout{
-  margin-top: 20px; padding: 10px 16px; min-height: 2.2em;
-  background: var(--navy-pale-2); border: 1px solid var(--line); border-radius: 8px;
-  font-size: 17px; color: var(--ink-soft); font-variant-numeric: tabular-nums;
-}
-.skill{ margin-top: 18px; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
-.skill .badge{
-  background: var(--navy-pale); color: var(--navy-deep); font-weight: 800;
-  border-radius: 100px; padding: 7px 18px; font-size: 18px; white-space: nowrap;
-}
-.skill .sk{ color: var(--ink-soft); font-size: 16.5px; max-width: 80ch; }
-.note{ font-size: 16px; color: var(--ink-mute); margin: 18px 0 0; }
-
-/* ---------------- 범례 ---------------- */
-.legendrow{ display: flex; gap: 40px; flex-wrap: wrap; margin-top: 26px; }
-.legend{ min-width: 260px; }
-.legend .cap{ font-size: 16px; font-weight: 600; color: var(--ink-soft); margin-bottom: 7px; }
-.legend .bar{ height: 12px; border-radius: 6px; border: 1px solid var(--line-str); }
-.legend .ends{ display: flex; justify-content: space-between; font-size: 15.5px; color: var(--ink-mute); margin-top: 5px; }
-.swrow{ display: flex; flex-wrap: wrap; gap: 10px 18px; }
-.sw{ display: inline-flex; align-items: center; gap: 7px; font-size: 16px; color: var(--ink-soft); }
-.chip{ width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(0,0,0,.12); display: inline-block; }
+h2.sec{ margin: 54px 0 14px; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: var(--navy-deep); }
+.tablewrap{ overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
+table.arch{ width: 100%; border-collapse: collapse; font-size: 18px; font-variant-numeric: tabular-nums; }
+.arch th{ text-align: left; background: var(--navy-pale-2); color: var(--navy-deep); font-weight: 700;
+  padding: 12px 18px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.arch td{ padding: 11px 18px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.arch tr:last-child td{ border-bottom: 0; }
+.arch td.o{ font-weight: 700; color: var(--ink); }
+.arch td.o em{ font-style: normal; font-size: 14px; color: #fff; background: var(--navy-soft);
+  border-radius: 100px; padding: 2px 9px; margin-left: 6px; }
+.arch td.n{ color: var(--ink-soft); }
+.arch td.dl a{ margin-right: 14px; font-weight: 600; }
+ul.spec{ margin: 0; padding-left: 1.1em; color: var(--ink-soft); }
+ul.spec li{ margin: 4px 0; }
+ul.spec b{ color: var(--navy-deep); margin-right: 8px; }
+.note{ font-size: 16px; color: var(--ink-mute); margin: 22px 0 0; }
 
 /* ---------------- 푸터 ---------------- */
 footer.site{ background: var(--navy-deep); color: #cfe0ec; padding: 44px 0 30px; font-size: 16.5px; }
@@ -244,57 +173,14 @@ footer.site img.flogo{ height: 44px; width: auto; filter: brightness(0) invert(1
 footer.site .flinks{ display: flex; flex-direction: column; gap: 8px; }
 footer.site .copyright{ margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.14); color: #8fb0c8; font-size: 15.5px; }
 
+
 @media (max-width: 900px){
   :root{ --fs-body: 18px; }
   .wrap{ padding: 0 16px; }
   .headbar{ padding: 12px 16px; gap: 12px; }
   .hero{ padding: 36px 0 28px; }
   .hero h1{ font-size: 32px; }
-  .maps{ grid-template-columns: 1fr; gap: 26px; }   /* 한 줄 배치에서는 폭을 다 쓴다 */
-  .ctl select{ max-width: calc(100vw - 100px); }    /* 색상표 이름이 길어도 가로 스크롤이 생기지 않게 */
-  .toolbar{ position: static; }                     /* 좁은 화면에서는 고정하지 않는다 (조작부가 화면을 많이 차지한다) */
+  .latesthead h2{ font-size: 28px; }
+  .fig{ padding: 6px; }
+  .btn{ font-size: 16.5px; padding: 9px 18px; }
 }
-
-/* ---------------- 해빙면적 그래프 ---------------- */
-.chartbox{
-  margin-top: 40px; border: 1px solid var(--line); border-radius: var(--radius);
-  background: #fff; padding: 24px 26px 20px;
-}
-.charthead h2{ margin: 0 0 4px; font-size: 24px; letter-spacing: -0.02em; font-weight: 800; color: var(--navy-deep); }
-.charthead p{ margin: 0 0 14px; font-size: 16.5px; color: var(--ink-mute); max-width: 82ch; }
-.sie{ width: 100%; }
-.sie svg{ display: block; overflow: visible; }
-.sie text.ax{ font-size: 13px; fill: var(--ink-mute); font-family: inherit; font-variant-numeric: tabular-nums; }
-.sie circle{ cursor: crosshair; }
-.chartlegend{ display: flex; gap: 20px; flex-wrap: wrap; align-items: center; margin-top: 10px; font-size: 16px; color: var(--ink-soft); }
-.chartlegend .ck{ display: inline-flex; align-items: center; gap: 8px; }
-.chartlegend .ck .line{ width: 26px; height: 3px; border-radius: 2px; display: inline-block; }
-.chartlegend .ck.note{ color: var(--ink-mute); font-size: 15.5px; }
-
-/* 초기화 좌우 이동 */
-.ctl .nav{
-  font: inherit; font-size: 15px; line-height: 1; cursor: pointer;
-  width: 34px; height: 34px; border-radius: 100px;
-  border: 1px solid var(--line-str); background: #fff; color: var(--navy-deep);
-}
-.ctl .nav:hover:not(:disabled){ border-color: var(--navy-soft); }
-.ctl .nav:disabled{ opacity: .35; cursor: default; }
-.skill .badge.muted{ background: var(--bg-tint); color: var(--ink-mute); font-weight: 700; }
-
-/* 그래프 툴팁 */
-.sie{ position: relative; }
-.sie .tip{
-  position: absolute; display: none; pointer-events: none; z-index: 5;
-  background: #fff; border: 1px solid var(--line-str); border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(19,32,43,.10);
-  padding: 8px 12px; font-size: 15.5px; color: var(--ink); white-space: nowrap;
-  font-variant-numeric: tabular-nums; line-height: 1.5;
-}
-.sie .tip.on{ display: block; }
-.sie .tip b{ display: block; color: var(--navy-deep); font-size: 15px; margin-bottom: 2px; }
-.sie .tip span{ display: block; }
-.sie .tip .d{ width: 9px; height: 9px; border-radius: 100px; display: inline-block; margin-right: 7px; }
-.sie .tip .d.o{ background: #004d82; }
-.sie .tip .d.f{ background: #ff6a13; }
-.sie .tip .df{ color: var(--ink-mute); }
-.ctl select:disabled{ opacity: .45; cursor: default; }
