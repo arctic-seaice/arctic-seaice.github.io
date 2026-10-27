@@ -130,38 +130,40 @@ nav.mainnav a:hover{ background: var(--navy); border-color: var(--navy); color: 
 .hero .sub{ margin: 0; max-width: 62ch; color: var(--ink-soft); }
 /* ---------------- 본문 ---------------- */
 .block{ padding: 34px 0 70px; }
-.latesthead{ display: flex; justify-content: space-between; align-items: flex-end; gap: 18px 30px; flex-wrap: wrap; }
-.tag{ display: inline-block; background: var(--navy); color: #fff; font-weight: 700; font-size: 16px;
-  border-radius: 100px; padding: 4px 14px; }
-.latesthead h2{ margin: 8px 0 2px; font-size: 34px; font-weight: 800; letter-spacing: -0.02em; color: var(--navy-deep); }
-.latesthead .meta{ margin: 0; color: var(--ink-soft); }
-.btns{ display: flex; gap: 10px; flex-wrap: wrap; }
-.btn{ display: inline-block; text-decoration: none; font-weight: 700; font-size: 18px;
-  background: var(--navy); color: #fff; border: 1px solid var(--navy); border-radius: 100px; padding: 10px 22px; }
-.btn:hover{ background: var(--navy-deep); }
-.btn.ghost{ background: #fff; color: var(--navy); border-color: var(--line-str); }
-.btn.ghost:hover{ border-color: var(--navy); }
+.issuebar{ display: flex; justify-content: space-between; align-items: flex-end; gap: 16px 30px; flex-wrap: wrap; }
+.issuebar h2{ margin: 0 0 2px; font-size: 34px; font-weight: 800; letter-spacing: -0.02em; color: var(--navy-deep); }
+.issuebar .meta{ margin: 0; color: var(--ink-soft); }
+.pager{ display: flex; align-items: center; gap: 10px; }
+.pager select{ font: inherit; font-size: 18px; font-weight: 700; color: var(--navy);
+  border: 1px solid var(--line-str); border-radius: 100px; padding: 9px 18px; background: #fff; cursor: pointer; }
+.pager .nav{ font: inherit; font-size: 17px; line-height: 1; cursor: pointer; width: 46px; height: 46px;
+  border-radius: 100px; border: 1px solid var(--line-str); background: #fff; color: var(--navy-deep); }
+.pager .nav:hover:not(:disabled){ background: var(--navy); border-color: var(--navy); color: #fff; }
+.pager .nav:disabled{ opacity: .3; cursor: default; }
 .fig{ margin: 24px 0 0; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 14px; }
 .fig img{ display: block; width: 100%; height: auto; }
 .fig figcaption{ margin-top: 10px; font-size: 16.5px; color: var(--ink-mute); }
-code{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .88em;
-  background: var(--navy-pale-2); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; }
-
-h2.sec{ margin: 54px 0 14px; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: var(--navy-deep); }
-.tablewrap{ overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
-table.arch{ width: 100%; border-collapse: collapse; font-size: 18px; font-variant-numeric: tabular-nums; }
-.arch th{ text-align: left; background: var(--navy-pale-2); color: var(--navy-deep); font-weight: 700;
-  padding: 12px 18px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-.arch td{ padding: 11px 18px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-.arch tr:last-child td{ border-bottom: 0; }
-.arch td.o{ font-weight: 700; color: var(--ink); }
-.arch td.o em{ font-style: normal; font-size: 14px; color: #fff; background: var(--navy-soft);
-  border-radius: 100px; padding: 2px 9px; margin-left: 6px; }
-.arch td.n{ color: var(--ink-soft); }
-.arch td.dl a{ margin-right: 14px; font-weight: 600; }
-ul.spec{ margin: 0; padding-left: 1.1em; color: var(--ink-soft); }
-ul.spec li{ margin: 4px 0; }
-ul.spec b{ color: var(--navy-deep); margin-right: 8px; }
+.chartbox{ margin-top: 34px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 24px 26px 20px; }
+.chartbox h2{ margin: 0 0 4px; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: var(--navy-deep); }
+.chartbox .csub{ margin: 0 0 14px; font-size: 16.5px; color: var(--ink-mute); }
+.sie{ position: relative; width: 100%; }
+.sie svg{ display: block; overflow: visible; }
+.sie text.ax{ font-size: 14px; fill: var(--ink-mute); font-family: inherit; font-variant-numeric: tabular-nums; }
+.sie text.yr{ font-weight: 700; fill: var(--ink-soft); }
+.sie .yl{ position: absolute; left: 0; top: 0; font-size: 13px; color: var(--ink-mute); }
+.sie .tip{ position: absolute; display: none; pointer-events: none; z-index: 5; background: #fff;
+  border: 1px solid var(--line-str); border-radius: 8px; box-shadow: 0 6px 18px rgba(19,32,43,.10);
+  padding: 8px 12px; font-size: 15.5px; white-space: nowrap; line-height: 1.55; font-variant-numeric: tabular-nums; }
+.sie .tip.on{ display: block; }
+.sie .tip b{ display: block; color: var(--navy-deep); }
+.sie .tip span{ display: block; }
+.sie .tip .d{ width: 9px; height: 9px; border-radius: 100px; display: inline-block; margin-right: 7px; }
+.sie .tip .df{ color: var(--ink-mute); }
+.chartlegend{ display: flex; gap: 8px 22px; flex-wrap: wrap; margin-top: 12px; font-size: 16px; color: var(--ink-soft); }
+.chartlegend .ck{ display: inline-flex; align-items: center; gap: 8px; }
+.chartlegend .ln{ width: 26px; height: 3px; border-radius: 2px; display: inline-block; }
+.chartlegend .ln.thick{ height: 5px; }
+.chartlegend .ln.dash{ background: repeating-linear-gradient(90deg, #9aaab8 0 6px, transparent 6px 10px); }
 .note{ font-size: 16px; color: var(--ink-mute); margin: 22px 0 0; }
 
 /* ---------------- 푸터 ---------------- */
@@ -180,7 +182,7 @@ footer.site .copyright{ margin-top: 24px; padding-top: 18px; border-top: 1px sol
   .headbar{ padding: 12px 16px; gap: 12px; }
   .hero{ padding: 36px 0 28px; }
   .hero h1{ font-size: 32px; }
-  .latesthead h2{ font-size: 28px; }
+  .issuebar h2{ font-size: 28px; }
+  .chartbox{ padding: 18px 14px 14px; }
   .fig{ padding: 6px; }
-  .btn{ font-size: 16.5px; padding: 9px 18px; }
 }

@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>북극 해빙 예보 | iGDSL 국립부경대학교</title>
-<meta name="description" content="북극 해빙 농도(SIC)를 25 km 격자에서 매달 예측해 그림과 NetCDF 파일로 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL)의 연구 산출물입니다.">
+<meta name="description" content="북극 해빙 농도(SIC)를 25 km 격자에서 매달 예측해 지도와 해빙면적 그래프로 공개합니다. 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL)의 연구 산출물입니다.">
 <link rel="canonical" href="https://arctic-seaice.github.io/">
 <meta name="author" content="국립부경대학교 지능형 공간데이터과학 연구실 (iGDSL)">
 <meta name="keywords" content="북극 해빙, 해빙 예측, 해빙예측, 해빙 전망, 해빙 농도, 해빙 면적, 북극항로, 북극 항로, 북극해, 위성 해빙 정보, 북극 해빙 감시, 극지 원격탐사, Arctic sea ice, sea ice forecast, sea ice prediction, sea ice concentration, SIC, sea ice extent, Northern Sea Route, Arctic shipping route, polar remote sensing, GeoAI, 국립부경대학교, iGDSL">
@@ -66,7 +66,7 @@
       "@id": "https://arctic-seaice.github.io/#dataset",
       "name": "북극 해빙 농도 월별 예보 (다음 3개월)",
       "alternateName": "Arctic sea ice concentration monthly forecast",
-      "description": "북극 해빙 농도(SIC)를 NSIDC 극사영 북반구 25 km 격자에서 매달 예측한 결과입니다. 그 달 15일까지의 자료로 다음 세 달 각각의 월평균과 세 달 평균을 산출해 그림과 NetCDF 파일로 공개합니다. 연구 산출물이며 공식 예보가 아닙니다.",
+      "description": "북극 해빙 농도(SIC)를 NSIDC 극사영 북반구 25 km 격자에서 매달 예측한 결과입니다. 그 달 15일까지의 자료로 다음 세 달 각각의 월평균과 세 달 평균을 산출해 지도와 해빙면적 그래프로 공개합니다. 연구 산출물이며 공식 예보가 아닙니다.",
       "url": "https://arctic-seaice.github.io/",
       "dateModified": "2026-10-27",
       "inLanguage": "ko",
@@ -86,18 +86,6 @@
         { "@type": "PropertyValue", "name": "해빙 농도 (sea ice concentration)", "unitText": "1" }
       ],
       "measurementTechnique": "AI 앙상블 (AnchorNet · SimVP · 파운데이션 모델) 월별 해빙 농도 예측",
-      "distribution": [
-        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202610.nc", "name": "2026년 10월 발표" },
-        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202609.nc", "name": "2026년 9월 발표" },
-        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202608.nc", "name": "2026년 8월 발표" },
-        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202607.nc", "name": "2026년 7월 발표" },
-        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202606.nc", "name": "2026년 6월 발표" },
-        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202605.nc", "name": "2026년 5월 발표" },
-        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202604.nc", "name": "2026년 4월 발표" },
-        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202603.nc", "name": "2026년 3월 발표" },
-        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202602.nc", "name": "2026년 2월 발표" },
-        { "@type": "DataDownload", "encodingFormat": "application/x-netcdf", "contentUrl": "https://arctic-seaice.github.io/files/PKNU_AI_SIC_202601.nc", "name": "2026년 1월 발표" }
-      ],
       "isBasedOn": [
         { "@type": "Dataset", "name": "NOAA/NSIDC Sea Ice Concentration CDR (G02202 v6)", "url": "https://nsidc.org/data/g02202" },
         { "@type": "Dataset", "name": "ECMWF ERA5 (Copernicus Climate Change Service)", "url": "https://cds.climate.copernicus.eu/" }
@@ -130,57 +118,40 @@
   <div class="wrap">
     <h1>다음 3개월의 북극 해빙</h1>
     <p class="sub">북극 해빙 농도(SIC)를 25 km 격자에서 매달 예측합니다.
-       그 달 15일까지의 자료로 다음 세 달의 월평균과 세 달 평균을 산출해, 그림과 NetCDF 파일로 공개합니다.</p>
+       그 달 15일까지의 자료로 다음 세 달의 월평균과 세 달 평균을 산출합니다.</p>
   </div>
 </section>
 
 <section class="block">
   <div class="wrap">
-    <div class="latesthead">
+    <div class="issuebar">
       <div>
-        <span class="tag">최신 발표</span>
-        <h2>2026년 10월 발표</h2>
-        <p class="meta">2026년 10월 15일까지의 자료로 산출한 2026년 11월 ~ 2027년 1월 예측</p>
+        <h2 id="ititle">최신 발표</h2>
+        <p class="meta" id="isub"></p>
       </div>
-      <div class="btns">
-        <a class="btn" href="files/PKNU_AI_SIC_202610.nc" download>NetCDF 내려받기</a>
-        <a class="btn ghost" href="figs/SIC_202610.png?v=1792988043" download>그림 (PNG)</a>
-        <a class="btn ghost" href="files/reference_sie.csv" download>참고 해빙면적 (CSV)</a>
+      <div class="pager" role="group" aria-label="발표 넘기기">
+        <button class="nav" id="prev" type="button" aria-label="이전 발표">◀</button>
+        <select id="sel" aria-label="발표 시점"></select>
+        <button class="nav" id="next" type="button" aria-label="다음 발표">▶</button>
       </div>
     </div>
     <figure class="fig">
-      <a href="figs/SIC_202610.png?v=1792988043" target="_blank" title="크게 보기"><img src="figs/SIC_202610.png?v=1792988043" alt="2026년 10월 발표 북극 해빙 농도 예측 지도"></a>
-      <figcaption>빨간 선은 예측 빙연(해빙 농도 15%), SIE는 15% 이상 격자의 면적입니다. 괄호 안은 관측값(있을 때) 또는 최근 10년 평년값입니다.
-        파일 이름: <code>PKNU_AI_SIC_202610.nc</code></figcaption>
+      <img id="figimg" src="figs/SIC_202610.png?v=1793061560" alt="북극 해빙 농도 예측 지도">
+      <figcaption>빨간 선은 예측 해빙경계(해빙 농도 15%), SIE는 해빙 농도 15% 이상 격자의 면적입니다.
+        괄호 안은 관측값(있을 때) 또는 최근 10년 평년값입니다. 키보드 ← → 로도 넘길 수 있습니다.</figcaption>
     </figure>
 
-    <h2 class="sec">지난 발표</h2>
-    <div class="tablewrap">
-      <table class="arch">
-        <thead><tr><th>발표</th><th>예측 대상 월</th><th>예측 SIE (M km²)</th><th>첨부파일</th></tr></thead>
-        <tbody>
-        <tr><td class="o">2026년 10월 <em>최신</em></td><td>2026.11, 2026.12, 2027.01</td><td class="n">9.31 · 11.76 · 13.34</td><td class="dl"><a href="figs/SIC_202610.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202610.nc" download>NetCDF</a></td></tr>
-        <tr><td class="o">2026년 9월</td><td>2026.10, 2026.11, 2026.12</td><td class="n">7.08 · 9.07 · 11.77</td><td class="dl"><a href="figs/SIC_202609.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202609.nc" download>NetCDF</a></td></tr>
-        <tr><td class="o">2026년 8월</td><td>2026.09, 2026.10, 2026.11</td><td class="n">4.99 · 7.01 · 9.18</td><td class="dl"><a href="figs/SIC_202608.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202608.nc" download>NetCDF</a></td></tr>
-        <tr><td class="o">2026년 7월</td><td>2026.08, 2026.09, 2026.10</td><td class="n">5.86 · 5.04 · 7.40</td><td class="dl"><a href="figs/SIC_202607.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202607.nc" download>NetCDF</a></td></tr>
-        <tr><td class="o">2026년 6월</td><td>2026.07, 2026.08, 2026.09</td><td class="n">8.26 · 5.49 · 4.84</td><td class="dl"><a href="figs/SIC_202606.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202606.nc" download>NetCDF</a></td></tr>
-        <tr><td class="o">2026년 5월</td><td>2026.06, 2026.07, 2026.08</td><td class="n">10.74 · 7.76 · 5.22</td><td class="dl"><a href="figs/SIC_202605.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202605.nc" download>NetCDF</a></td></tr>
-        <tr><td class="o">2026년 4월</td><td>2026.05, 2026.06, 2026.07</td><td class="n">12.27 · 11.00 · 7.91</td><td class="dl"><a href="figs/SIC_202604.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202604.nc" download>NetCDF</a></td></tr>
-        <tr><td class="o">2026년 3월</td><td>2026.04, 2026.05, 2026.06</td><td class="n">13.91 · 12.50 · 11.01</td><td class="dl"><a href="figs/SIC_202603.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202603.nc" download>NetCDF</a></td></tr>
-        <tr><td class="o">2026년 2월</td><td>2026.03, 2026.04, 2026.05</td><td class="n">14.67 · 13.83 · 12.43</td><td class="dl"><a href="figs/SIC_202602.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202602.nc" download>NetCDF</a></td></tr>
-        <tr><td class="o">2026년 1월</td><td>2026.02, 2026.03, 2026.04</td><td class="n">14.64 · 14.85 · 13.94</td><td class="dl"><a href="figs/SIC_202601.png?v=1792988043" target="_blank">그림</a><a href="files/PKNU_AI_SIC_202601.nc" download>NetCDF</a></td></tr>
-        </tbody>
-      </table>
+    <div class="chartbox">
+      <h2>해빙면적 — 예측 vs 관측</h2>
+      <p class="csub">달마다 그 달을 처음 예측한 값(1개월 전 발표)과 관측을 비교합니다. 굵은 주황 선은 위에서 고른 발표의 3개월 예측입니다.</p>
+      <div class="sie" id="sie"></div>
+      <div class="chartlegend">
+        <span class="ck"><i class="ln" style="background:#004d82"></i>관측</span>
+        <span class="ck"><i class="ln" style="background:#f6a26b"></i>1개월 전 예측</span>
+        <span class="ck"><i class="ln thick" style="background:#e8590c"></i>선택한 발표의 예측</span>
+        <span class="ck"><i class="ln dash"></i>최근 10년 평년</span>
+      </div>
     </div>
-
-    <h2 class="sec">파일 안내</h2>
-    <ul class="spec">
-      <li><b>격자</b> NSIDC 극사영 북반구 25 km (EPSG:3411, 304 × 448)</li>
-      <li><b>변수</b> <code>sic</code> 다음 3개월 각각의 월평균 해빙 농도(0–1), <code>sic_3month</code> 3개월 평균,
-          <code>*_raw</code> 분위 보정 전 값</li>
-      <li><b>입력</b> NOAA/NSIDC CDR G02202 v6 해빙 농도 + ECMWF ERA5. 그 달 1–15일 자료까지 사용</li>
-      <li><b>모델</b> v2026H1_r5</li>
-    </ul>
     <p class="note">연구 산출물이며, 안전이 걸린 판단의 근거로 쓰도록 만든 공식 예보가 아닙니다. 마지막 갱신 2026-10-27.</p>
   </div>
 </section>
@@ -208,5 +179,98 @@
     </div>
   </div>
 </footer>
+<script>
+const D = {"issues":[{"origin":"2026-10","cutoff":"15","fig":"figs/SIC_202610.png?v=1793061560","targets":["2026-11","2026-12","2027-01"],"sie":[9.307,11.764,13.343]},{"origin":"2026-09","cutoff":"15","fig":"figs/SIC_202609.png?v=1793061824","targets":["2026-10","2026-11","2026-12"],"sie":[7.085,9.068,11.768]},{"origin":"2026-08","cutoff":"15","fig":"figs/SIC_202608.png?v=1793061824","targets":["2026-09","2026-10","2026-11"],"sie":[4.993,7.011,9.183]},{"origin":"2026-07","cutoff":"15","fig":"figs/SIC_202607.png?v=1793061823","targets":["2026-08","2026-09","2026-10"],"sie":[5.862,5.038,7.397]},{"origin":"2026-06","cutoff":"15","fig":"figs/SIC_202606.png?v=1793061823","targets":["2026-07","2026-08","2026-09"],"sie":[8.262,5.489,4.842]},{"origin":"2026-05","cutoff":"15","fig":"figs/SIC_202605.png?v=1793061823","targets":["2026-06","2026-07","2026-08"],"sie":[10.744,7.761,5.218]},{"origin":"2026-04","cutoff":"15","fig":"figs/SIC_202604.png?v=1793061822","targets":["2026-05","2026-06","2026-07"],"sie":[12.265,11.001,7.907]},{"origin":"2026-03","cutoff":"15","fig":"figs/SIC_202603.png?v=1793061822","targets":["2026-04","2026-05","2026-06"],"sie":[13.909,12.504,11.006]},{"origin":"2026-02","cutoff":"15","fig":"figs/SIC_202602.png?v=1793061822","targets":["2026-03","2026-04","2026-05"],"sie":[14.668,13.831,12.429]},{"origin":"2026-01","cutoff":"15","fig":"figs/SIC_202601.png?v=1793061560","targets":["2026-02","2026-03","2026-04"],"sie":[14.641,14.847,13.935]}],"ref":{"2026-01":{"obs":13.3225,"clim10":14.005},"2026-02":{"obs":14.3562,"clim10":14.9887},"2026-03":{"obs":14.4419,"clim10":15.2656},"2026-04":{"obs":13.6594,"clim10":14.205},"2026-05":{"obs":12.17,"clim10":12.7706},"2026-06":{"obs":10.6294,"clim10":11.515},"2026-07":{"obs":8.0919,"clim10":8.6731},"2026-08":{"obs":5.6963,"clim10":6.0006},"2026-09":{"obs":4.8256,"clim10":5.0131},"2026-10":{"obs":null,"clim10":7.6787},"2026-11":{"obs":null,"clim10":9.9006},"2026-12":{"obs":null,"clim10":12.45},"2027-01":{"obs":null,"clim10":13.9887}}};
+(function(){
+  const I = D.issues, R = D.ref;              // I[0] 이 최신
+  const sel = document.getElementById('sel'), img = document.getElementById('figimg');
+  const lab = ym => { const [y,m] = ym.split('-'); return `${y}년 ${+m}월`; };
+  I.forEach((it,i) => sel.add(new Option(lab(it.origin) + ' 발표' + (i ? '' : ' (최신)'), i)));
+  I.slice(1).forEach(it => { const p = new Image(); p.src = it.fig; });   // 넘길 때 바로 뜨게
+  let cur = 0;
+  function show(i){
+    cur = Math.max(0, Math.min(I.length-1, i));
+    const it = I[cur];
+    sel.value = cur; img.src = it.fig; img.alt = lab(it.origin) + ' 발표 북극 해빙 농도 예측 지도';
+    document.getElementById('ititle').textContent = lab(it.origin) + ' 발표' ;
+    document.getElementById('isub').textContent =
+      `${lab(it.origin)} ${it.cutoff}일까지의 자료로 산출한 ${lab(it.targets[0])} ~ ${lab(it.targets[2])} 예측`;
+    document.getElementById('prev').disabled = cur === I.length-1;   // ◀ = 과거
+    document.getElementById('next').disabled = cur === 0;
+    chart();
+  }
+  document.getElementById('prev').onclick = () => show(cur+1);
+  document.getElementById('next').onclick = () => show(cur-1);
+  sel.onchange = () => show(+sel.value);
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'SELECT') return;
+    if (e.key === 'ArrowLeft') show(cur+1); else if (e.key === 'ArrowRight') show(cur-1);
+  });
+
+  // ---------- 해빙면적 그래프 ----------
+  const lead1 = {};                             // 목표월 → 1개월 전 발표의 예측
+  I.forEach(it => { lead1[it.targets[0]] = it.sie[0]; });
+  const months = [...new Set([...Object.keys(R), ...I.flatMap(it => it.targets)])].sort();
+  const box = document.getElementById('sie');
+  const tip = document.createElement('div'); tip.className = 'tip';
+
+  function chart(){
+    const W = box.clientWidth || 900, H = W < 600 ? 300 : 360;
+    const m = {l: 46, r: 14, t: 30, b: 40}, w = W - m.l - m.r, h = H - m.t - m.b;
+    const it = I[cur];
+    const vals = months.flatMap(k => [R[k]?.obs, R[k]?.clim10, lead1[k]]).concat(it.sie).filter(v => v != null);
+    let lo = Math.floor(Math.min(...vals) - .5), hi = Math.ceil(Math.max(...vals) + .5);
+    const x = i => m.l + (months.length < 2 ? w/2 : i * w / (months.length - 1));
+    const y = v => m.t + h - (v - lo) / (hi - lo) * h;
+    const ix = k => months.indexOf(k);
+    const path = pts => pts.map((p,i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('');
+    const ser = f => months.map((k,i) => [i, f(k)]).filter(p => p[1] != null).map(p => [x(p[0]), y(p[1])]);
+    let s = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="해빙면적 예측과 관측">`;
+    const step = hi - lo > 8 ? 2 : 1;
+    for (let v = lo; v <= hi; v += step)
+      s += `<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" stroke="#e6edf3"/>` +
+           `<text class="ax" x="${m.l-8}" y="${y(v)+4}" text-anchor="end">${v}</text>`;
+    const every = W < 600 ? 3 : 1;
+    months.forEach((k,i) => { if (i % every === 0 || i === months.length-1) {
+      const [yy,mm] = k.split('-');
+      s += `<text class="ax" x="${x(i)}" y="${H-m.b+18}" text-anchor="middle">${+mm}월</text>`;
+      if (+mm === 1 || i === 0) s += `<text class="ax yr" x="${x(i)}" y="${H-m.b+35}" text-anchor="middle">${yy}</text>`;
+    }});
+    s += `<text class="ax" x="${m.l}" y="${m.t-2}" text-anchor="start" dy="-2"></text>`;
+    s += `<path d="${path(ser(k => R[k]?.clim10))}" fill="none" stroke="#9aaab8" stroke-width="1.6" stroke-dasharray="5 5"/>`;
+    const l1 = ser(k => lead1[k]);
+    s += `<path d="${path(l1)}" fill="none" stroke="#f6a26b" stroke-width="2"/>`;
+    l1.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="#f6a26b"/>`);
+    const ob = ser(k => R[k]?.obs);
+    s += `<path d="${path(ob)}" fill="none" stroke="#004d82" stroke-width="2.6"/>`;
+    ob.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="#004d82"/>`);
+    const sp = it.targets.map((k,j) => [x(ix(k)), y(it.sie[j])]);
+    s += `<path d="${path(sp)}" fill="none" stroke="#e8590c" stroke-width="3.6"/>`;
+    sp.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="5.5" fill="#e8590c" stroke="#fff" stroke-width="1.5"/>`);
+    s += `<line id="hl" y1="${m.t}" y2="${m.t+h}" stroke="#13202b" stroke-opacity=".18" visibility="hidden"/>`;
+    s += `<rect x="${m.l}" y="${m.t}" width="${w}" height="${h}" fill="transparent" id="hit"/>`;
+    box.innerHTML = s + '</svg><div class="yl">M km²</div>';
+    box.appendChild(tip);
+    const hit = box.querySelector('#hit'), hl = box.querySelector('#hl');
+    const move = e => {
+      const r = box.getBoundingClientRect(), px = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+      const i = Math.max(0, Math.min(months.length-1, Math.round((px - m.l) / w * (months.length - 1))));
+      const k = months[i], j = it.targets.indexOf(k), f = v => v == null ? '–' : v.toFixed(2);
+      hl.setAttribute('x1', x(i)); hl.setAttribute('x2', x(i)); hl.setAttribute('visibility', 'visible');
+      tip.innerHTML = `<b>${lab(k)}</b><span><i class="d" style="background:#004d82"></i>관측 ${f(R[k]?.obs)}</span>` +
+        `<span><i class="d" style="background:#f6a26b"></i>1개월 전 예측 ${f(lead1[k])}</span>` +
+        (j >= 0 ? `<span><i class="d" style="background:#e8590c"></i>선택 발표 예측 ${f(it.sie[j])}</span>` : '') +
+        `<span class="df">평년 ${f(R[k]?.clim10)}</span>`;
+      tip.classList.add('on');
+      const tx = x(i) + 14, tw = tip.offsetWidth;
+      tip.style.left = (tx + tw > W ? x(i) - tw - 14 : tx) + 'px'; tip.style.top = (m.t + 6) + 'px';
+    };
+    hit.addEventListener('mousemove', move); hit.addEventListener('touchstart', move, {passive: true});
+    hit.addEventListener('mouseleave', () => { tip.classList.remove('on'); hl.setAttribute('visibility', 'hidden'); });
+  }
+  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(chart, 120); });
+  show(0);
+})();
+</script>
 </body>
 </html>

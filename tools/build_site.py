@@ -3,8 +3,7 @@
 
 sea-ice-forecasting 폴더에 PKNU_AI_SIC_YYYYMM.nc 를 넣고 이 스크립트를 한 번 돌리면
   1) 발표마다 4패널 그림(다음 3개월 + 3개월 평균)을 figs/SIC_YYYYMM.png 로 만들고
-  2) nc 와 reference_sie.csv 를 files/ 로 복사하고
-  3) index.html(최신 그림 + 첨부파일 + 지난 발표 목록)과 sitemap.xml 을 다시 쓴다.
+  2) index.html(발표를 넘겨 보는 그림 + 해빙면적 예측 vs 관측 그래프)과 sitemap.xml 을 다시 쓴다.
 
 이미 만든 그림은 nc 가 바뀌지 않았으면 건너뛴다(--force 로 전부 다시).
 
@@ -17,9 +16,8 @@ from __future__ import annotations
 
 import argparse
 import csv
-import html
+import json
 import re
-import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -36,7 +34,6 @@ from PIL import Image
 SITE = Path(__file__).resolve().parent.parent
 TOOLS = SITE / "tools"
 FIGS = SITE / "figs"
-FILES = SITE / "files"
 URL = "https://arctic-seaice.github.io/"
 NC_RE = re.compile(r"PKNU_AI_SIC_(\d{4})(\d{2})\.nc$")
 
@@ -109,15 +106,6 @@ def write_text(path: Path, text: str) -> None:
     path.write_text(text, encoding="utf-8")
 
 
-def copy_if_changed(src: Path, dst: Path) -> None:
-    """내용이 다를 때만 복사한다 (구글 드라이브 폴더에서도 덮어쓰기가 안전하도록 지우고 새로 쓴다)."""
-    if dst.exists():
-        if dst.read_bytes() == src.read_bytes():
-            return
-        dst.unlink()
-    shutil.copyfile(src, dst)
-
-
 # ---------------------------------------------------------------- 그림
 def make_cmap():
     blues = LinearSegmentedColormap.from_list(
@@ -157,7 +145,7 @@ def draw(info: dict, land: np.ndarray, ref: dict, out: Path) -> None:
         for sp in ax.spines.values():
             sp.set_color("#b8c4cc")
 
-    axes[0].legend(handles=[Line2D([], [], color=EDGE, lw=2, label="예측 빙연 (15%)")],
+    axes[0].legend(handles=[Line2D([], [], color=EDGE, lw=2, label="예측 해빙경계 (15%)")],
                    loc="lower left", fontsize=13, framealpha=0.92)
     cax = fig.add_axes([0.915, 0.06, 0.013, 0.70])
     sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(0, 1))
@@ -172,47 +160,22 @@ def draw(info: dict, land: np.ndarray, ref: dict, out: Path) -> None:
 
 
 # ---------------------------------------------------------------- 페이지
-def esc(s) -> str:
-    return html.escape(str(s))
-
-
-def page(items: list[dict], ref_csv: bool) -> str:
+def page(items: list[dict], ref: dict) -> str:
+    """items 는 최신 발표가 앞. 화면에서 넘겨 볼 수 있게 발표 목록과 해빙면적을 JSON 으로 심는다."""
     tpl = (TOOLS / "template.html").read_text(encoding="utf-8")
-    latest = items[0]
-    oy, om = latest["origin"]
-    t = latest["targets"]
-    stamp = f"?v={latest['mtime']}"
-
-    rows = []
-    for i, it in enumerate(items):
-        y, m = it["origin"]
-        tg = ", ".join(f"{a}.{b:02d}" for a, b in it["targets"])
-        sv = " · ".join(f"{v:.2f}" for v in it["sie"])
-        rows.append(
-            f'<tr><td class="o">{y}년 {m}월{" <em>최신</em>" if i == 0 else ""}</td>'
-            f'<td>{tg}</td><td class="n">{sv}</td>'
-            f'<td class="dl"><a href="figs/{it["fig"]}{it["v"]}" target="_blank">그림</a>'
-            f'<a href="files/{it["nc"]}" download>NetCDF</a></td></tr>')
-
-    dist = ",\n        ".join(
-        '{ "@type": "DataDownload", "encodingFormat": "application/x-netcdf", '
-        f'"contentUrl": "{URL}files/{it["nc"]}", "name": "{it["origin"][0]}년 {it["origin"][1]}월 발표" }}'
-        for it in items)
-
-    sub = (f"{oy}년 {om}월 {latest['cutoff']}일까지의 자료로 산출한 "
-           f"{t[0][0]}년 {t[0][1]}월 ~ {t[2][0]}년 {t[2][1]}월 예측")
+    data = {
+        "issues": [{
+            "origin": f"{it['origin'][0]}-{it['origin'][1]:02d}",
+            "cutoff": it["cutoff"],
+            "fig": f"figs/{it['fig']}{it['v']}",
+            "targets": [f"{y}-{m:02d}" for y, m in it["targets"]],
+            "sie": [round(v, 3) for v in it["sie"]],
+        } for it in items],
+        "ref": {k: v for k, v in sorted(ref.items())},
+    }
     rep = {
-        "{{LATEST_FIG}}": f"figs/{latest['fig']}{stamp}",
-        "{{LATEST_NC}}": f"files/{latest['nc']}",
-        "{{LATEST_NC_NAME}}": latest["nc"],
-        "{{LATEST_TITLE}}": f"{oy}년 {om}월 발표",
-        "{{LATEST_SUB}}": esc(sub),
-        "{{LATEST_PRODUCED}}": esc(latest["produced"] or ""),
-        "{{LATEST_MODEL}}": esc(latest["model"]),
-        "{{REF_LINK}}": ('<a class="btn ghost" href="files/reference_sie.csv" download>'
-                         '참고 해빙면적 (CSV)</a>' if ref_csv else ""),
-        "{{ROWS}}": "\n        ".join(rows),
-        "{{DISTRIBUTION}}": dist,
+        "{{DATA}}": json.dumps(data, ensure_ascii=False, separators=(",", ":")),
+        "{{LATEST_FIG}}": data["issues"][0]["fig"],
         "{{UPDATED}}": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "{{YEAR}}": str(datetime.now().year),
     }
@@ -241,37 +204,29 @@ def main() -> None:
         raise SystemExit(f"nc 파일이 없습니다: {a.src}")
     land = np.array(Image.open(TOOLS / "land_mask.png")) > 0
     ref = read_reference(a.src)
-    FIGS.mkdir(exist_ok=True); FILES.mkdir(exist_ok=True)
+    FIGS.mkdir(exist_ok=True)
 
     items = []
     for nc in ncs:
-        ym = nc.stem[-6:]
-        fig = FIGS / f"SIC_{ym}.png"
-        dst = FILES / nc.name
+        fig = FIGS / f"SIC_{nc.stem[-6:]}.png"
         info = load(nc)
-        changed = (not dst.exists() or dst.stat().st_size != nc.stat().st_size
-                   or dst.stat().st_mtime < nc.stat().st_mtime)
-        if a.force or changed or not fig.exists():
+        if a.force or not fig.exists() or fig.stat().st_mtime < nc.stat().st_mtime:
+            if fig.exists():
+                fig.unlink()
             draw(info, land, ref, fig)
-            copy_if_changed(nc, dst)
             print(f"  그림  {fig.relative_to(SITE)}")
         mt = int(nc.stat().st_mtime)
-        info.update(fig=fig.name, nc=nc.name, mtime=mt, v=f"?v={mt}")
+        info.update(fig=fig.name, v=f"?v={mt}")
         info.pop("sic"); info.pop("sic3")
         items.append(info)
 
-    # 원본 폴더에서 사라진 발표는 사이트에서도 지운다
-    keep = {it["nc"] for it in items}
-    for p in FILES.glob("PKNU_AI_SIC_*.nc"):
+    # 원본 폴더에서 사라진 발표의 그림은 지운다
+    keep = {f"SIC_{nc.stem[-6:]}.png" for nc in ncs}
+    for p in FIGS.glob("SIC_*.png"):
         if p.name not in keep:
-            p.unlink(); (FIGS / f"SIC_{p.stem[-6:]}.png").unlink(missing_ok=True)
-            print(f"  삭제  {p.name}")
+            p.unlink(); print(f"  삭제  {p.name}")
 
-    ref_csv = (a.src / "reference_sie.csv").exists()
-    if ref_csv:
-        copy_if_changed(a.src / "reference_sie.csv", FILES / "reference_sie.csv")
-
-    write_text(SITE / "index.html", page(items, ref_csv))
+    write_text(SITE / "index.html", page(items, ref))
     write_text(SITE / "sitemap.xml", sitemap(datetime.now(timezone.utc).strftime("%Y-%m-%d")))
     oy, om = items[0]["origin"]
     print(f"완료 — 발표 {len(items)}건, 최신 {oy}-{om:02d}. 이제 git add -A && git commit && git push")
