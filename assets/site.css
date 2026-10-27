@@ -127,14 +127,14 @@ nav.mainnav a:hover{ background: var(--navy); border-color: var(--navy); color: 
   margin: 0 0 10px; font-size: 44px; line-height: 1.25;
   letter-spacing: -0.02em; font-weight: 800; color: var(--navy-deep);
 }
-.hero .sub{ margin: 0; max-width: 62ch; color: var(--ink-soft); }
+.hero .sub{ margin: 0; max-width: 46ch; color: var(--ink-soft); font-size: 24px; line-height: 1.6; }
 /* ---------------- 본문 ---------------- */
 .block{ padding: 34px 0 70px; }
 .issuebar{ display: flex; justify-content: space-between; align-items: flex-end; gap: 16px 30px; flex-wrap: wrap; }
 .issuebar h2{ margin: 0 0 2px; font-size: 34px; font-weight: 800; letter-spacing: -0.02em; color: var(--navy-deep); }
-.issuebar .meta{ margin: 0; color: var(--ink-soft); }
+.issuebar .meta{ margin: 0; color: var(--ink-soft); font-size: 22px; }
 .pager{ display: flex; align-items: center; gap: 10px; }
-.pager select{ font: inherit; font-size: 18px; font-weight: 700; color: var(--navy);
+.pager select{ font: inherit; font-size: 19px; font-weight: 700; color: var(--navy);
   border: 1px solid var(--line-str); border-radius: 100px; padding: 9px 18px; background: #fff; cursor: pointer; }
 .pager .nav{ font: inherit; font-size: 17px; line-height: 1; cursor: pointer; width: 46px; height: 46px;
   border-radius: 100px; border: 1px solid var(--line-str); background: #fff; color: var(--navy-deep); }
@@ -142,29 +142,29 @@ nav.mainnav a:hover{ background: var(--navy); border-color: var(--navy); color: 
 .pager .nav:disabled{ opacity: .3; cursor: default; }
 .fig{ margin: 24px 0 0; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 14px; }
 .fig img{ display: block; width: 100%; height: auto; }
-.fig figcaption{ margin-top: 10px; font-size: 16.5px; color: var(--ink-mute); }
+.fig figcaption{ margin-top: 12px; font-size: 19px; color: var(--ink-mute); }
 .chartbox{ margin-top: 34px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 24px 26px 20px; }
 .chartbox h2{ margin: 0 0 4px; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: var(--navy-deep); }
-.chartbox .csub{ margin: 0 0 14px; font-size: 16.5px; color: var(--ink-mute); }
+.chartbox .csub{ margin: 0 0 16px; font-size: 19px; color: var(--ink-mute); }
 .sie{ position: relative; width: 100%; }
 .sie svg{ display: block; overflow: visible; }
-.sie text.ax{ font-size: 14px; fill: var(--ink-mute); font-family: inherit; font-variant-numeric: tabular-nums; }
+.sie text.ax{ font-size: 15.5px; fill: var(--ink-mute); font-family: inherit; font-variant-numeric: tabular-nums; }
 .sie text.yr{ font-weight: 700; fill: var(--ink-soft); }
 .sie .yl{ position: absolute; left: 0; top: 0; font-size: 13px; color: var(--ink-mute); }
 .sie .tip{ position: absolute; display: none; pointer-events: none; z-index: 5; background: #fff;
   border: 1px solid var(--line-str); border-radius: 8px; box-shadow: 0 6px 18px rgba(19,32,43,.10);
-  padding: 8px 12px; font-size: 15.5px; white-space: nowrap; line-height: 1.55; font-variant-numeric: tabular-nums; }
+  padding: 9px 13px; font-size: 17px; white-space: nowrap; line-height: 1.55; font-variant-numeric: tabular-nums; }
 .sie .tip.on{ display: block; }
 .sie .tip b{ display: block; color: var(--navy-deep); }
 .sie .tip span{ display: block; }
 .sie .tip .d{ width: 9px; height: 9px; border-radius: 100px; display: inline-block; margin-right: 7px; }
 .sie .tip .df{ color: var(--ink-mute); }
-.chartlegend{ display: flex; gap: 8px 22px; flex-wrap: wrap; margin-top: 12px; font-size: 16px; color: var(--ink-soft); }
+.chartlegend{ display: flex; gap: 8px 22px; flex-wrap: wrap; margin-top: 14px; font-size: 18px; color: var(--ink-soft); }
 .chartlegend .ck{ display: inline-flex; align-items: center; gap: 8px; }
 .chartlegend .ln{ width: 26px; height: 3px; border-radius: 2px; display: inline-block; }
 .chartlegend .ln.thick{ height: 5px; }
 .chartlegend .ln.dash{ background: repeating-linear-gradient(90deg, #9aaab8 0 6px, transparent 6px 10px); }
-.note{ font-size: 16px; color: var(--ink-mute); margin: 22px 0 0; }
+.note{ font-size: 18px; color: var(--ink-mute); margin: 22px 0 0; }
 
 /* ---------------- 푸터 ---------------- */
 footer.site{ background: var(--navy-deep); color: #cfe0ec; padding: 44px 0 30px; font-size: 16.5px; }
@@ -182,6 +182,9 @@ footer.site .copyright{ margin-top: 24px; padding-top: 18px; border-top: 1px sol
   .headbar{ padding: 12px 16px; gap: 12px; }
   .hero{ padding: 36px 0 28px; }
   .hero h1{ font-size: 32px; }
+  .hero .sub{ font-size: 20px; }
+  .issuebar .meta{ font-size: 19px; }
+  .fig figcaption, .chartbox .csub{ font-size: 17px; }
   .issuebar h2{ font-size: 28px; }
   .chartbox{ padding: 18px 14px 14px; }
   .fig{ padding: 6px; }
