@@ -142,6 +142,8 @@ nav.mainnav a:hover{ background: var(--navy); border-color: var(--navy); color: 
 .pager .nav:disabled{ opacity: .3; cursor: default; }
 .fig{ margin: 24px 0 0; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 14px; }
 .fig img{ display: block; width: 100%; height: auto; }
+.fig figcaption .obs{ color: #0b63b5; }
+.fig figcaption .clim{ color: #8a96a1; }
 .fig figcaption{ margin-top: 12px; font-size: 19px; color: var(--ink-mute); }
 .chartbox{ margin-top: 34px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 24px 26px 20px; }
 .chartbox h2{ margin: 0 0 4px; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: var(--navy-deep); }

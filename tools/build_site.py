@@ -40,6 +40,7 @@ NC_RE = re.compile(r"PKNU_AI_SIC_(\d{4})(\d{2})\.nc$")
 CELL_KM2 = 25.0 * 25.0
 THRESH = 0.15
 OCEAN, LAND, EDGE = "#0c2340", "#8e9ea9", "#c8372d"
+OBS_C, CLIM_C = "#0b63b5", "#8a96a1"     # 그림 제목의 관측(파랑) / 평년(회색)
 
 from matplotlib import font_manager as _fm
 
@@ -119,8 +120,8 @@ def make_cmap():
 def draw(info: dict, land: np.ndarray, ref: dict, out: Path) -> None:
     cmap = make_cmap()
     oy, om = info["origin"]
-    fig, axes = plt.subplots(1, 4, figsize=(20, 7.6))
-    fig.subplots_adjust(left=0.01, right=0.90, top=0.80, bottom=0.03, wspace=0.12)
+    fig, axes = plt.subplots(1, 4, figsize=(20, 8.2))
+    fig.subplots_adjust(left=0.01, right=0.90, top=0.74, bottom=0.03, wspace=0.12)
     fields = [info["sic"][i] for i in range(3)] + [info["sic3"]]
     names = [ym_label(*t) for t in info["targets"]]
     t0, t2 = info["targets"][0], info["targets"][2]
@@ -134,20 +135,25 @@ def draw(info: dict, land: np.ndarray, ref: dict, out: Path) -> None:
         ax.imshow(np.ma.masked_where(~land, land), cmap=ListedColormap([LAND]),
                   interpolation="nearest")
         ax.contour(np.where(land, np.nan, rgb), levels=[THRESH], colors=EDGE, linewidths=1.6)
-        sub = f"SIE {s:.2f} M km²"
+        # 제목 3줄: 대상 월 / 예측 SIE / 관측(파랑, 굵게) 또는 평년(회색) — 둘이 헷갈리지 않게 색을 나눈다
         r = ref.get(k) if k else None
+        ax.text(0.5, 1.165, nm, transform=ax.transAxes, ha="center", va="bottom",
+                fontsize=19, fontweight="bold", color="#13202b")
+        ax.text(0.5, 1.09, f"예측 SIE {s:.2f} M km²", transform=ax.transAxes,
+                ha="center", va="bottom", fontsize=16, color="#13202b")
         if r and r.get("obs") is not None:
-            sub += f"  (관측 {r['obs']:.2f})"
+            ax.text(0.5, 1.02, f"관측 {r['obs']:.2f} M km²", transform=ax.transAxes,
+                    ha="center", va="bottom", fontsize=16, fontweight="bold", color=OBS_C)
         elif r and r.get("clim10") is not None:
-            sub += f"  (평년 {r['clim10']:.2f})"
-        ax.set_title(f"{nm}\n{sub}", fontsize=17, linespacing=1.4)
+            ax.text(0.5, 1.02, f"평년(최근 10년) {r['clim10']:.2f} M km²", transform=ax.transAxes,
+                    ha="center", va="bottom", fontsize=15, color=CLIM_C)
         ax.set_xticks([]); ax.set_yticks([])
         for sp in ax.spines.values():
             sp.set_color("#b8c4cc")
 
     axes[0].legend(handles=[Line2D([], [], color=EDGE, lw=2, label="예측 해빙경계 (15%)")],
                    loc="lower left", fontsize=13, framealpha=0.92)
-    cax = fig.add_axes([0.915, 0.06, 0.013, 0.70])
+    cax = fig.add_axes([0.915, 0.06, 0.013, 0.66])
     sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(0, 1))
     cb = fig.colorbar(sm, cax=cax, ticks=[0, .15, .3, .5, .7, .9, 1])
     cb.ax.set_yticklabels(["0", "15%", "30%", "50%", "70%", "90%", "100%"], fontsize=13)
