@@ -127,7 +127,7 @@ nav.mainnav a:hover{ background: var(--navy); border-color: var(--navy); color: 
   margin: 0 0 10px; font-size: 44px; line-height: 1.25;
   letter-spacing: -0.02em; font-weight: 800; color: var(--navy-deep);
 }
-.hero .sub{ margin: 0; max-width: 46ch; color: var(--ink-soft); font-size: 24px; line-height: 1.6; }
+.hero .sub{ margin: 0; max-width: none; color: var(--ink-soft); font-size: 24px; line-height: 1.6; }
 /* ---------------- 본문 ---------------- */
 .block{ padding: 34px 0 70px; }
 .issuebar{ display: flex; justify-content: space-between; align-items: flex-end; gap: 16px 30px; flex-wrap: wrap; }
@@ -183,6 +183,7 @@ footer.site .copyright{ margin-top: 24px; padding-top: 18px; border-top: 1px sol
   .hero{ padding: 36px 0 28px; }
   .hero h1{ font-size: 32px; }
   .hero .sub{ font-size: 20px; }
+  .hero .sub br.wide{ display: none; }
   .issuebar .meta{ font-size: 19px; }
   .fig figcaption, .chartbox .csub{ font-size: 17px; }
   .issuebar h2{ font-size: 28px; }
