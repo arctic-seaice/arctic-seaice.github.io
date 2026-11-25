@@ -1,12 +1,14 @@
 # 북극 해빙 예보 — arctic-seaice.github.io
 
 다음 3개월의 북극 해빙 농도를 매달 예측해 **발표별 지도 그림(넘겨 보기) + 해빙면적 예측 vs 관측 그래프**로 공개하는 정적 사이트다.
+예측은 KOPRI-PKNU 해빙 예측 시스템(KSI)의 결과다(2026-11-25부터; 그 전의 그림은 git 기록에 있다).
 국립부경대학교 지능형 공간데이터과학 연구실(iGDSL, https://igdsl.github.io/).
 연구 산출물이며, 안전이 걸린 판단의 근거로 쓰도록 만든 공식 예보가 아니다.
 
 ## 매달 올리는 법
 
-1. 예측 결과 `PKNU_AI_SIC_YYYYMM.nc`(와 갱신된 `reference_sie.csv`)를 옆 폴더 `../sea-ice-forecasting/` 에 넣는다.
+1. 예측 결과 `KSI_SIC_YYYYMM.nc`(와 갱신된 `reference_sie.csv`)를 옆 폴더 `../ksi-sea-ice-forecasting/` 에 넣는다.
+   이 파일들은 예보 시스템 저장소(kopri-sea-ice-forecasting)의 `scripts/site_ksi_products.py` 가 만든다.
 2. 이 폴더에서 변환기를 돌린다.
    ```bash
    python3 tools/build_site.py          # 원본 폴더가 다른 곳이면 --src 경로
@@ -30,7 +32,9 @@
 | `index.html`, `sitemap.xml` | 자동 생성 (발표 목록·해빙면적 값이 JSON 으로 들어 있다) |
 
 그림: 다음 3개월 각각과 3개월 평균의 해빙 농도, 빨간 선은 예측 해빙경계(15%).
-패널 제목의 SIE 는 15% 이상 격자 면적(25 km × 25 km 격자 수)이고, 괄호는 `reference_sie.csv` 의 관측값(있으면) 또는 10년 평년값이다.
+패널 제목의 SIE 는 nc 속성 `sie_10e6km2`(고정 바다에서 15% 이상 칸의 실제 면적 합, 3개월 평균 칸은 세 달 SIE 의 평균)이고,
+셋째 줄은 `reference_sie.csv` 의 관측값(있으면) 또는 직전 10년 평년값이다(같은 면적 정의, 관측은 14.9% 이상).
+nc 의 `production` 속성이 '회고' 또는 '나중에'로 시작하는 발표는 화면에 '나중에 같은 방법으로 다시 계산한 것'으로 표시된다.
 
 ## 검색 노출
 

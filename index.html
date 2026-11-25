@@ -68,7 +68,7 @@
       "alternateName": "Arctic sea ice concentration monthly forecast",
       "description": "북극 해빙 농도(SIC)를 NSIDC 극사영 북반구 25 km 격자에서 매달 예측한 결과입니다. 그 달 15일까지의 자료로 다음 세 달 각각의 월평균과 세 달 평균을 산출해 지도와 해빙면적 그래프로 공개합니다. 연구 산출물이며 공식 예보가 아닙니다.",
       "url": "https://arctic-seaice.github.io/",
-      "dateModified": "2026-10-27",
+      "dateModified": "2026-11-25",
       "inLanguage": "ko",
       "license": "https://creativecommons.org/licenses/by/4.0/",
       "isAccessibleForFree": true,
@@ -85,7 +85,7 @@
       "variableMeasured": [
         { "@type": "PropertyValue", "name": "해빙 농도 (sea ice concentration)", "unitText": "1" }
       ],
-      "measurementTechnique": "AI 앙상블 (AnchorNet · SimVP · 파운데이션 모델) 월별 해빙 농도 예측",
+      "measurementTechnique": "AI 앙상블 (ConvNeXt · MogaNet 각 5시드) + 감쇠 지속 통계 지도의 가중 결합, 분위 사상 보정 — 월별 해빙 농도 예측",
       "isBasedOn": [
         { "@type": "Dataset", "name": "NOAA/NSIDC Sea Ice Concentration CDR (G02202 v6)", "url": "https://nsidc.org/data/g02202" },
         { "@type": "Dataset", "name": "ECMWF ERA5 (Copernicus Climate Change Service)", "url": "https://cds.climate.copernicus.eu/" }
@@ -135,8 +135,8 @@
       </div>
     </div>
     <figure class="fig">
-      <img id="figimg" src="figs/SIC_202610.png?v=1792988043" alt="북극 해빙 농도 예측 지도">
-      <figcaption>빨간 선은 예측 해빙경계(해빙 농도 15%), SIE는 해빙 농도 15% 이상 격자의 면적입니다.
+      <img id="figimg" src="figs/SIC_202611.png?v=1795583137" alt="북극 해빙 농도 예측 지도">
+      <figcaption>빨간 선은 예측 해빙경계(해빙 농도 15%), SIE는 해빙 농도 15% 이상 격자의 실제 면적 합입니다.
         각 지도 위 셋째 줄은 <b class="obs">관측</b>(이미 관측된 달) 또는 <span class="clim">최근 10년 평년</span>(아직 관측 전인 달)의 면적입니다. 키보드 ← → 로도 넘길 수 있습니다.</figcaption>
     </figure>
 
@@ -151,7 +151,8 @@
         <span class="ck"><i class="ln dash"></i>최근 10년 평년</span>
       </div>
     </div>
-    <p class="note">연구 산출물이며, 안전이 걸린 판단의 근거로 쓰도록 만든 공식 예보가 아닙니다. 마지막 갱신 2026-10-27.</p>
+    <p class="note">2026년 1–10월 발표는 같은 방법으로 나중에 다시 계산한 것이고, 2026년 11월 발표부터 발표 시점에 만든 예보입니다.
+      연구 산출물이며, 안전이 걸린 판단의 근거로 쓰도록 만든 공식 예보가 아닙니다. 마지막 갱신 2026-11-25.</p>
   </div>
 </section>
 
@@ -179,7 +180,7 @@
   </div>
 </footer>
 <script>
-const D = {"issues":[{"origin":"2026-10","cutoff":"15","fig":"figs/SIC_202610.png?v=1792988043","targets":["2026-11","2026-12","2027-01"],"sie":[9.307,11.764,13.343]},{"origin":"2026-09","cutoff":"15","fig":"figs/SIC_202609.png?v=1792988043","targets":["2026-10","2026-11","2026-12"],"sie":[7.085,9.068,11.768]},{"origin":"2026-08","cutoff":"15","fig":"figs/SIC_202608.png?v=1792988043","targets":["2026-09","2026-10","2026-11"],"sie":[4.993,7.011,9.183]},{"origin":"2026-07","cutoff":"15","fig":"figs/SIC_202607.png?v=1792988043","targets":["2026-08","2026-09","2026-10"],"sie":[5.862,5.038,7.397]},{"origin":"2026-06","cutoff":"15","fig":"figs/SIC_202606.png?v=1792988043","targets":["2026-07","2026-08","2026-09"],"sie":[8.262,5.489,4.842]},{"origin":"2026-05","cutoff":"15","fig":"figs/SIC_202605.png?v=1792988043","targets":["2026-06","2026-07","2026-08"],"sie":[10.744,7.761,5.218]},{"origin":"2026-04","cutoff":"15","fig":"figs/SIC_202604.png?v=1792988043","targets":["2026-05","2026-06","2026-07"],"sie":[12.265,11.001,7.907]},{"origin":"2026-03","cutoff":"15","fig":"figs/SIC_202603.png?v=1792988043","targets":["2026-04","2026-05","2026-06"],"sie":[13.909,12.504,11.006]},{"origin":"2026-02","cutoff":"15","fig":"figs/SIC_202602.png?v=1792988043","targets":["2026-03","2026-04","2026-05"],"sie":[14.668,13.831,12.429]},{"origin":"2026-01","cutoff":"15","fig":"figs/SIC_202601.png?v=1792988043","targets":["2026-02","2026-03","2026-04"],"sie":[14.641,14.847,13.935]}],"ref":{"2026-01":{"obs":13.3225,"clim10":14.005},"2026-02":{"obs":14.3562,"clim10":14.9887},"2026-03":{"obs":14.4419,"clim10":15.2656},"2026-04":{"obs":13.6594,"clim10":14.205},"2026-05":{"obs":12.17,"clim10":12.7706},"2026-06":{"obs":10.6294,"clim10":11.515},"2026-07":{"obs":8.0919,"clim10":8.6731},"2026-08":{"obs":5.6963,"clim10":6.0006},"2026-09":{"obs":4.8256,"clim10":5.0131},"2026-10":{"obs":null,"clim10":7.6787},"2026-11":{"obs":null,"clim10":9.9006},"2026-12":{"obs":null,"clim10":12.45},"2027-01":{"obs":null,"clim10":13.9887}}};
+const D = {"issues":[{"origin":"2026-11","cutoff":"15","fig":"figs/SIC_202611.png?v=1795583137","targets":["2026-12","2027-01","2027-02"],"sie":[11.977,13.536,14.402],"retro":false},{"origin":"2026-10","cutoff":"15","fig":"figs/SIC_202610.png?v=1795582410","targets":["2026-11","2026-12","2027-01"],"sie":[9.684,12.063,13.53],"retro":true},{"origin":"2026-09","cutoff":"15","fig":"figs/SIC_202609.png?v=1795582186","targets":["2026-10","2026-11","2026-12"],"sie":[7.615,9.614,12.073],"retro":true},{"origin":"2026-08","cutoff":"15","fig":"figs/SIC_202608.png?v=1795581964","targets":["2026-09","2026-10","2026-11"],"sie":[4.802,7.348,9.55],"retro":true},{"origin":"2026-07","cutoff":"15","fig":"figs/SIC_202607.png?v=1795581743","targets":["2026-08","2026-09","2026-10"],"sie":[6.182,5.328,7.665],"retro":true},{"origin":"2026-06","cutoff":"15","fig":"figs/SIC_202606.png?v=1795581523","targets":["2026-07","2026-08","2026-09"],"sie":[8.521,6.209,5.323],"retro":true},{"origin":"2026-05","cutoff":"15","fig":"figs/SIC_202605.png?v=1795581305","targets":["2026-06","2026-07","2026-08"],"sie":[11.013,8.368,5.63],"retro":true},{"origin":"2026-04","cutoff":"15","fig":"figs/SIC_202604.png?v=1795581088","targets":["2026-05","2026-06","2026-07"],"sie":[12.444,11.105,8.259],"retro":true},{"origin":"2026-03","cutoff":"15","fig":"figs/SIC_202603.png?v=1795580872","targets":["2026-04","2026-05","2026-06"],"sie":[13.945,12.516,11.142],"retro":true},{"origin":"2026-02","cutoff":"15","fig":"figs/SIC_202602.png?v=1795580664","targets":["2026-03","2026-04","2026-05"],"sie":[14.559,13.89,12.623],"retro":true},{"origin":"2026-01","cutoff":"15","fig":"figs/SIC_202601.png?v=1795580457","targets":["2026-02","2026-03","2026-04"],"sie":[14.505,14.608,13.853],"retro":true}],"ref":{"2026-01":{"obs":13.4301,"clim10":13.8174},"2026-02":{"obs":14.3925,"clim10":14.5679},"2026-03":{"obs":14.481,"clim10":14.7882},"2026-04":{"obs":13.772,"clim10":13.9814},"2026-05":{"obs":12.3862,"clim10":12.7318},"2026-06":{"obs":10.8941,"clim10":11.107},"2026-07":{"obs":8.417,"clim10":8.5483},"2026-08":{"obs":6.0107,"clim10":5.7677},"2026-09":{"obs":5.0757,"clim10":4.8402},"2026-10":{"obs":7.4385,"clim10":7.1732},"2026-11":{"obs":null,"clim10":9.9212},"2026-12":{"obs":null,"clim10":12.3487},"2027-01":{"obs":null,"clim10":13.7827},"2027-02":{"obs":null,"clim10":14.5601}}};
 (function(){
   const I = D.issues, R = D.ref;              // I[0] 이 최신
   const sel = document.getElementById('sel'), img = document.getElementById('figimg');
@@ -193,7 +194,8 @@ const D = {"issues":[{"origin":"2026-10","cutoff":"15","fig":"figs/SIC_202610.pn
     sel.value = cur; img.src = it.fig; img.alt = lab(it.origin) + ' 발표 북극 해빙 농도 예측 지도';
     document.getElementById('ititle').textContent = lab(it.origin) + ' 발표' ;
     document.getElementById('isub').textContent =
-      `${lab(it.origin)} ${it.cutoff}일까지의 자료로 산출한 ${lab(it.targets[0])} ~ ${lab(it.targets[2])} 예측`;
+      `${lab(it.origin)} ${it.cutoff}일까지의 자료로 산출한 ${lab(it.targets[0])} ~ ${lab(it.targets[2])} 예측` +
+      (it.retro ? ' (그 달에 낸 예보가 아니라 나중에 같은 방법으로 다시 계산한 것)' : '');
     document.getElementById('prev').disabled = cur === I.length-1;   // ◀ = 과거
     document.getElementById('next').disabled = cur === 0;
     chart();

@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """북극 해빙 예측 nc → arctic-seaice.github.io 변환기.
 
-sea-ice-forecasting 폴더에 PKNU_AI_SIC_YYYYMM.nc 를 넣고 이 스크립트를 한 번 돌리면
+ksi-sea-ice-forecasting 폴더에 KSI_SIC_YYYYMM.nc 를 넣고 이 스크립트를 한 번 돌리면
+(파일은 예보 시스템 저장소의 scripts/site_ksi_products.py 가 만든다)
   1) 발표마다 4패널 그림(다음 3개월 + 3개월 평균)을 figs/SIC_YYYYMM.png 로 만들고
   2) index.html(발표를 넘겨 보는 그림 + 해빙면적 예측 vs 관측 그래프)과 sitemap.xml 을 다시 쓴다.
 
 이미 만든 그림은 nc 가 바뀌지 않았으면 건너뛴다(--force 로 전부 다시).
 
 사용법 (사이트 저장소 폴더에서):
-    python3 tools/build_site.py                       # 기본: ../sea-ice-forecasting
-    python3 tools/build_site.py --src /경로/sea-ice-forecasting
+    python3 tools/build_site.py                       # 기본: ../ksi-sea-ice-forecasting
+    python3 tools/build_site.py --src /경로/ksi-sea-ice-forecasting
 필요 패키지: numpy, xarray, netCDF4, matplotlib, pillow
 """
 from __future__ import annotations
@@ -35,7 +36,7 @@ SITE = Path(__file__).resolve().parent.parent
 TOOLS = SITE / "tools"
 FIGS = SITE / "figs"
 URL = "https://arctic-seaice.github.io/"
-NC_RE = re.compile(r"PKNU_AI_SIC_(\d{4})(\d{2})\.nc$")
+NC_RE = re.compile(r"KSI_SIC_(\d{4})(\d{2})\.nc$")
 
 CELL_KM2 = 25.0 * 25.0
 THRESH = 0.15
@@ -81,6 +82,7 @@ def north_up(a: np.ndarray, y: np.ndarray) -> np.ndarray:
 
 
 def sie(field: np.ndarray) -> float:
+    """nc 에 SIE 속성이 없을 때만 쓰는 대체값: 15% 이상 칸 수 x 공칭 625 km²."""
     return float((np.nan_to_num(field) >= THRESH).sum() * CELL_KM2 / 1e6)
 
 
@@ -94,9 +96,15 @@ def load(nc: Path) -> dict:
     cutoff = str(attrs.get("sic_cutoff_days", "1~15")).split("~")[-1].strip() or "15"
     hist = str(attrs.get("history", ""))[:10]
     targets = [add_month(oy, om, k) for k in (1, 2, 3)]
+    # SIE: KSI 파일의 속성(고정 바다, 실제 칸 면적, 3M = 세 달 SIE 평균)을 그대로 쓴다. 없으면 공칭 면적으로 잰다
+    s = json.loads(attrs["sie_10e6km2"]) if "sie_10e6km2" in attrs else None
+    sies = [s[f"L{k}"] for k in (1, 2, 3)] if s else [sie(sic[i]) for i in range(3)]
+    sie3 = s["3M"] if s else sie(sic3)
+    # 회고: 그 달에 낸 예보가 아니라 나중에 같은 방법으로 다시 계산한 것 (production 속성)
+    retro = str(attrs.get("production", "")).startswith(("회고", "나중에"))
     return dict(origin=(oy, om), cutoff=cutoff, produced=hist, sic=sic, sic3=sic3,
-                targets=targets, model=attrs.get("model_version", ""),
-                sie=[sie(sic[i]) for i in range(3)], sie3=sie(sic3))
+                targets=targets, model=attrs.get("model_version", ""), retro=retro,
+                sie=sies, sie3=sie3)
 
 
 def write_text(path: Path, text: str) -> None:
@@ -176,6 +184,7 @@ def page(items: list[dict], ref: dict) -> str:
             "fig": f"figs/{it['fig']}{it['v']}",
             "targets": [f"{y}-{m:02d}" for y, m in it["targets"]],
             "sie": [round(v, 3) for v in it["sie"]],
+            "retro": it["retro"],
         } for it in items],
         "ref": {k: v for k, v in sorted(ref.items())},
     }
@@ -200,12 +209,12 @@ def sitemap(day: str) -> str:
 # ---------------------------------------------------------------- 실행
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--src", type=Path, default=SITE.parent / "sea-ice-forecasting",
-                    help="예측 nc 가 들어 있는 폴더 (기본: 사이트 옆 sea-ice-forecasting)")
+    ap.add_argument("--src", type=Path, default=SITE.parent / "ksi-sea-ice-forecasting",
+                    help="예측 nc 가 들어 있는 폴더 (기본: 사이트 옆 ksi-sea-ice-forecasting)")
     ap.add_argument("--force", action="store_true", help="그림을 모두 다시 그린다")
     a = ap.parse_args()
 
-    ncs = sorted((p for p in a.src.glob("PKNU_AI_SIC_*.nc") if NC_RE.search(p.name)), reverse=True)
+    ncs = sorted((p for p in a.src.glob("KSI_SIC_*.nc") if NC_RE.search(p.name)), reverse=True)
     if not ncs:
         raise SystemExit(f"nc 파일이 없습니다: {a.src}")
     land = np.array(Image.open(TOOLS / "land_mask.png")) > 0

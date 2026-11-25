@@ -85,7 +85,7 @@
       "variableMeasured": [
         { "@type": "PropertyValue", "name": "해빙 농도 (sea ice concentration)", "unitText": "1" }
       ],
-      "measurementTechnique": "AI 앙상블 (AnchorNet · SimVP · 파운데이션 모델) 월별 해빙 농도 예측",
+      "measurementTechnique": "AI 앙상블 (ConvNeXt · MogaNet 각 5시드) + 감쇠 지속 통계 지도의 가중 결합, 분위 사상 보정 — 월별 해빙 농도 예측",
       "isBasedOn": [
         { "@type": "Dataset", "name": "NOAA/NSIDC Sea Ice Concentration CDR (G02202 v6)", "url": "https://nsidc.org/data/g02202" },
         { "@type": "Dataset", "name": "ECMWF ERA5 (Copernicus Climate Change Service)", "url": "https://cds.climate.copernicus.eu/" }
@@ -136,7 +136,7 @@
     </div>
     <figure class="fig">
       <img id="figimg" src="{{LATEST_FIG}}" alt="북극 해빙 농도 예측 지도">
-      <figcaption>빨간 선은 예측 해빙경계(해빙 농도 15%), SIE는 해빙 농도 15% 이상 격자의 면적입니다.
+      <figcaption>빨간 선은 예측 해빙경계(해빙 농도 15%), SIE는 해빙 농도 15% 이상 격자의 실제 면적 합입니다.
         각 지도 위 셋째 줄은 <b class="obs">관측</b>(이미 관측된 달) 또는 <span class="clim">최근 10년 평년</span>(아직 관측 전인 달)의 면적입니다. 키보드 ← → 로도 넘길 수 있습니다.</figcaption>
     </figure>
 
@@ -151,7 +151,8 @@
         <span class="ck"><i class="ln dash"></i>최근 10년 평년</span>
       </div>
     </div>
-    <p class="note">연구 산출물이며, 안전이 걸린 판단의 근거로 쓰도록 만든 공식 예보가 아닙니다. 마지막 갱신 {{UPDATED}}.</p>
+    <p class="note">2026년 1–10월 발표는 같은 방법으로 나중에 다시 계산한 것이고, 2026년 11월 발표부터 발표 시점에 만든 예보입니다.
+      연구 산출물이며, 안전이 걸린 판단의 근거로 쓰도록 만든 공식 예보가 아닙니다. 마지막 갱신 {{UPDATED}}.</p>
   </div>
 </section>
 
@@ -193,7 +194,8 @@ const D = {{DATA}};
     sel.value = cur; img.src = it.fig; img.alt = lab(it.origin) + ' 발표 북극 해빙 농도 예측 지도';
     document.getElementById('ititle').textContent = lab(it.origin) + ' 발표' ;
     document.getElementById('isub').textContent =
-      `${lab(it.origin)} ${it.cutoff}일까지의 자료로 산출한 ${lab(it.targets[0])} ~ ${lab(it.targets[2])} 예측`;
+      `${lab(it.origin)} ${it.cutoff}일까지의 자료로 산출한 ${lab(it.targets[0])} ~ ${lab(it.targets[2])} 예측` +
+      (it.retro ? ' (그 달에 낸 예보가 아니라 나중에 같은 방법으로 다시 계산한 것)' : '');
     document.getElementById('prev').disabled = cur === I.length-1;   // ◀ = 과거
     document.getElementById('next').disabled = cur === 0;
     chart();
