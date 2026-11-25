@@ -147,7 +147,7 @@
       <div class="chartlegend">
         <span class="ck"><i class="ln" style="background:#004d82"></i>관측</span>
         <span class="ck"><i class="ln" style="background:#f6a26b"></i>1개월 전 예측</span>
-        <span class="ck"><i class="ln thick" style="background:#e8590c"></i>선택한 발표의 예측</span>
+        <span class="ck"><i class="ln thick" style="background:#e8590c"></i><span id="sellab">선택한 발표의 3개월 예측</span></span>
         <span class="ck"><i class="ln dash"></i>최근 10년 평년</span>
       </div>
     </div>
@@ -185,6 +185,7 @@ const D = {{DATA}};
   const I = D.issues, R = D.ref;              // I[0] 이 최신
   const sel = document.getElementById('sel'), img = document.getElementById('figimg');
   const lab = ym => { const [y,m] = ym.split('-'); return `${y}년 ${+m}월`; };
+  const mon = ym => `${+ym.split('-')[1]}월`;     // 범례·도움말용 짧은 표기 (예: 11월)
   I.forEach((it,i) => sel.add(new Option(lab(it.origin) + ' 발표' + (i ? '' : ' (최신)'), i)));
   I.slice(1).forEach(it => { const p = new Image(); p.src = it.fig; });   // 넘길 때 바로 뜨게
   let cur = 0;
@@ -193,6 +194,7 @@ const D = {{DATA}};
     const it = I[cur];
     sel.value = cur; img.src = it.fig; img.alt = lab(it.origin) + ' 발표 북극 해빙 농도 예측 지도';
     document.getElementById('ititle').textContent = lab(it.origin) + ' 발표' ;
+    document.getElementById('sellab').textContent = mon(it.origin) + ' 발표의 3개월 예측';
     document.getElementById('isub').textContent =
       `${lab(it.origin)} ${it.cutoff}일까지의 자료로 산출한 ${lab(it.targets[0])} ~ ${lab(it.targets[2])} 예측`;
     document.getElementById('prev').disabled = cur === I.length-1;   // ◀ = 과거
@@ -259,7 +261,7 @@ const D = {{DATA}};
       hl.setAttribute('x1', x(i)); hl.setAttribute('x2', x(i)); hl.setAttribute('visibility', 'visible');
       tip.innerHTML = `<b>${lab(k)}</b><span><i class="d" style="background:#004d82"></i>관측 ${f(R[k]?.obs)}</span>` +
         `<span><i class="d" style="background:#f6a26b"></i>1개월 전 예측 ${f(lead1[k])}</span>` +
-        (j >= 0 ? `<span><i class="d" style="background:#e8590c"></i>선택 발표 예측 ${f(it.sie[j])}</span>` : '') +
+        (j >= 0 ? `<span><i class="d" style="background:#e8590c"></i>${mon(it.origin)} 발표 예측 ${f(it.sie[j])}</span>` : '') +
         `<span class="df">평년 ${f(R[k]?.clim10)}</span>`;
       tip.classList.add('on');
       const tx = x(i) + 14, tw = tip.offsetWidth;
