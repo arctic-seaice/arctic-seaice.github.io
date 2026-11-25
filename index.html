@@ -194,8 +194,7 @@ const D = {"issues":[{"origin":"2026-11","cutoff":"15","fig":"figs/SIC_202611.pn
     sel.value = cur; img.src = it.fig; img.alt = lab(it.origin) + ' 발표 북극 해빙 농도 예측 지도';
     document.getElementById('ititle').textContent = lab(it.origin) + ' 발표' ;
     document.getElementById('isub').textContent =
-      `${lab(it.origin)} ${it.cutoff}일까지의 자료로 산출한 ${lab(it.targets[0])} ~ ${lab(it.targets[2])} 예측` +
-      (it.retro ? ' (그 달에 낸 예보가 아니라 나중에 같은 방법으로 다시 계산한 것)' : '');
+      `${lab(it.origin)} ${it.cutoff}일까지의 자료로 산출한 ${lab(it.targets[0])} ~ ${lab(it.targets[2])} 예측`;
     document.getElementById('prev').disabled = cur === I.length-1;   // ◀ = 과거
     document.getElementById('next').disabled = cur === 0;
     chart();
